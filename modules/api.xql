@@ -5,12 +5,12 @@ xquery version "3.1";
  : @author Peter Andorfer
 :)
 
-module namespace api="http://www.digital-archiv.at/ns/dsebaseapp/api";
+module namespace api="http://www.digital-archiv.at/ns/mrptestapp/api";
 declare namespace rest = "http://exquery.org/ns/restxq";
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 import module namespace functx = "http://www.functx.com";
-import module namespace app="http://www.digital-archiv.at/ns/dsebaseapp/templates" at "app.xql";
-import module namespace config="http://www.digital-archiv.at/ns/dsebaseapp/config" at "config.xqm";
+import module namespace app="http://www.digital-archiv.at/ns/mrptestapp/templates" at "app.xql";
+import module namespace config="http://www.digital-archiv.at/ns/mrptestapp/config" at "config.xqm";
 declare namespace output = "http://www.w3.org/2010/xslt-xquery-serialization";
 declare namespace http = "http://expath.org/ns/http-client";
 
@@ -143,7 +143,7 @@ declare variable $api:XML :=
 
 declare 
     %rest:GET
-    %rest:path("/dsebaseapp/api/collections")
+    %rest:path("/mrptestapp/api/collections")
     %rest:query-param("page[number]", "{$pageNumber}", 1)
     %rest:query-param("page[size]", "{$pageSize}", 20)
     %rest:query-param("format", "{$format}", 'json')
@@ -190,7 +190,7 @@ function api:api-list-collections($format as xs:string*, $pageNumber as xs:integ
 :)
 declare 
     %rest:GET
-    %rest:path("/dsebaseapp/api/collections/{$collection}")
+    %rest:path("/mrptestapp/api/collections/{$collection}")
     %rest:query-param("page[number]", "{$pageNumber}", 1)
     %rest:query-param("page[size]", "{$pageSize}", 20)
     %rest:query-param("format", "{$format}", 'json')
@@ -212,7 +212,7 @@ function api:api-list-documents($collection as xs:string, $format as xs:string*,
 
 declare
     %rest:GET
-    %rest:path("/dsebaseapp/api/entities")
+    %rest:path("/mrptestapp/api/entities")
     %rest:query-param("page[number]", "{$pageNumber}", 1)
     %rest:query-param("page[size]", "{$pageSize}", 20)
     %rest:query-param("format", "{$format}", 'json')
@@ -263,7 +263,7 @@ function api:api-list-entities($pageNumber as xs:integer*, $pageSize as xs:integ
 
 declare 
     %rest:GET
-    %rest:path("/dsebaseapp/api/collections/{$collection}/{$id}")
+    %rest:path("/mrptestapp/api/collections/{$collection}/{$id}")
 function api:api-show-doc($collection as xs:string, $id as xs:string) {
     let $result := doc($config:app-root||'/data/'||$collection||'/'||$id)
     return 
@@ -280,7 +280,7 @@ function api:api-show-doc($collection as xs:string, $id as xs:string) {
 
 declare
     %rest:GET
-    %rest:path("/dsebaseapp/api/entities/{$id}")
+    %rest:path("/mrptestapp/api/entities/{$id}")
 function api:api-show-entity($id as xs:string){
     let $entity := collection($app:indices)//id($id)
     return
@@ -296,7 +296,7 @@ function api:api-show-entity($id as xs:string){
 
 declare
     %rest:GET
-    %rest:path("/dsebaseapp/api/entity-types")
+    %rest:path("/mrptestapp/api/entity-types")
     %rest:query-param("page[number]", "{$pageNumber}", 1)
     %rest:query-param("page[size]", "{$pageSize}", 20)
     %rest:query-param("format", "{$format}", 'json')
@@ -346,7 +346,7 @@ function api:api-list-entity-types($pageNumber as xs:integer*, $pageSize as xs:i
 
 declare 
     %rest:GET
-    %rest:path("/dsebaseapp/api/entity-types/{$id}")
+    %rest:path("/mrptestapp/api/entity-types/{$id}")
 function api:api-show-ent-type-doc($id as xs:string) {
     let $result := doc($app:indices||'/'||$id)
     return 

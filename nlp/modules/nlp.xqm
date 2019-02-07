@@ -7,7 +7,7 @@ xquery version "3.1";
  : @author Peter Andorfer
 :)
 
-module namespace nlp="http://www.digital-archiv.at/ns/dsebaseapp/nlp";
+module namespace nlp="http://www.digital-archiv.at/ns/mrptestapp/nlp";
 
 import module namespace functx = "http://www.functx.com";
 import module namespace httpclient ="http://exist-db.org/xquery/httpclient";
@@ -60,7 +60,7 @@ declare function nlp:custom-tokenizer($input as node(), $profile as xs:string) a
 :)
 
 declare function nlp:custom-tokenize-and-save($input as node(), $profile as xs:string) as xs:string{
-    let $collection-uri := '/db/apps/dsebaseapp/nlp/temp/'
+    let $collection-uri := '/db/apps/mrptestapp/nlp/temp/'
     let $resource-name := util:document-name($input)
     let $tokenized := nlp:custom-tokenizer($input, $profile)
     where $tokenized//httpclient:body/*

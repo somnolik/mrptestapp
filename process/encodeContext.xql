@@ -1,8 +1,8 @@
 xquery version "3.1";
 declare namespace functx = "http://www.functx.com";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
-import module namespace app="http://www.digital-archiv.at/ns/dsebaseapp/templates" at "../modules/app.xql";
-import module namespace config="http://www.digital-archiv.at/ns/dsebaseapp/config" at "../modules/config.xqm";
+import module namespace app="http://www.digital-archiv.at/ns/mrptestapp/templates" at "../modules/app.xql";
+import module namespace config="http://www.digital-archiv.at/ns/mrptestapp/config" at "../modules/config.xqm";
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 
 (: This script adds @prev and @next attributes to tei:TEI nodes.
@@ -11,8 +11,8 @@ declare namespace tei = "http://www.tei-c.org/ns/1.0";
 :)
 
 let $archeURL := "https://id.acdh.oeaw.ac.at/"
-let $projectURL := 'dsebaseapp/'
-let $dataURL := 'dsebaseapp/'
+let $projectURL := 'mrptestapp/'
+let $dataURL := 'mrptestapp/'
 let $idURL := $archeURL||$projectURL||$dataURL
 
 
