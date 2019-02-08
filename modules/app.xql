@@ -280,7 +280,10 @@ declare function app:toc($node as node(), $model as map(*)) {
         else
             collection(concat($config:app-root, '/data/editions/'))//tei:TEI
     for $title in $docs
-        let $date := $title//tei:title//text()
+        let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
+            then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
+            else data($title//tei:editionStmt/tei:edition/tei:date[1]/text()) (: picks date in meta collection :)
+        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[not(@level='s')]//text(), ', '))
         let $link2doc := if ($collection)
             then
                 <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
@@ -289,6 +292,7 @@ declare function app:toc($node as node(), $model as map(*)) {
         return
         <tr>
            <td>{$date}</td>
+           <td>{$datum}</td>
             <td>
                 {$link2doc}
             </td>
