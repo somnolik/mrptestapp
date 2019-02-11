@@ -32,12 +32,24 @@
                     </xsl:if>
                 </div>
                 <div class="col-md-8">
+                    <h1 style="font-size:small;" align="center">
+                        <xsl:for-each select="//tei:fileDesc/tei:titleStmt/tei:title[@level='s']">
+                            <xsl:apply-templates/>
+                            <xsl:if test="position() != last()">, </xsl:if>
+                        </xsl:for-each>
+                    </h1>
                     <h2 align="center">
-                        <xsl:for-each select="//tei:fileDesc/tei:titleStmt/tei:title[not(@level='s')]">
+                        <xsl:for-each select="//tei:fileDesc/tei:titleStmt/tei:title[@level='m']">
                             <xsl:apply-templates/>
                             <xsl:if test="position() != last()">, </xsl:if>
                         </xsl:for-each>
                     </h2>
+                    <h3 align="center">
+                        <xsl:for-each select="//tei:fileDesc/tei:titleStmt/tei:title[@level='a']">
+                            <xsl:apply-templates/>
+                            <xsl:if test="position() != last()">, </xsl:if>
+                        </xsl:for-each>
+                    </h3>
                     <h2 style="text-align:center;">
                         <input type="range" min="1" max="{$amount}" value="{$currentIx}" data-rangeslider="" style="width:100%;"/>
                         <a id="output" class="btn btn-main btn-outline-primary btn-sm" href="show.html?document=entry__1879-03-03.xml&amp;directory=editions" role="button">go to </a>
