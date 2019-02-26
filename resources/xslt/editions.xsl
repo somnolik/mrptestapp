@@ -414,6 +414,12 @@
         </span>
     </xsl:template>
     
+    <xsl:template match="tei:quote">
+        <q>
+            <xsl:apply-templates/>
+        </q>
+    </xsl:template>
+    
     <xsl:template match="//tei:hi">
         <xsl:choose>
             <xsl:when test="@rend='#letterspaced'">
