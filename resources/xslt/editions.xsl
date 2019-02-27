@@ -257,9 +257,9 @@
                                             <xsl:text>#fna_</xsl:text>
                                             <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
                                         </xsl:attribute>
-                                        <span style="font-size:7pt;vertical-align:super;">
+                                        <sup>
                                             <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
-                                        </span>
+                                        </sup>
                                     </a>
                                 </xsl:element>
                                 <xsl:text> </xsl:text>
@@ -281,9 +281,9 @@
                                             <xsl:text>#fna_</xsl:text>
                                             <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
                                         </xsl:attribute>
-                                        <span style="font-size:7pt;vertical-align:super;">
+                                        <sup>
                                             <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
-                                        </span>
+                                        </sup>
                                     </a>
                                 </xsl:element>
                                 <xsl:text> </xsl:text>
@@ -381,9 +381,9 @@
             <xsl:attribute name="title">
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:attribute>
-            <span style="font-size:7pt;vertical-align:super;">
+            <sup>
                 <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
-            </span>
+            </sup>
         </xsl:element>
     </xsl:template>
     <xsl:template match="tei:note[@type='variant']">
@@ -399,9 +399,9 @@
             <xsl:attribute name="title">
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:attribute>
-            <span style="font-size:7pt;vertical-align:super;">
+            <sup>
                 <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
-            </span>
+            </sup>
         </xsl:element>
     </xsl:template>
    

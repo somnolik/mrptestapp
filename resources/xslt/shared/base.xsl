@@ -26,9 +26,9 @@
                 </sup>
             </xsl:when>
             <xsl:when test="@rend='strikethrough'">
-                <strike>
+                <del>
                     <xsl:apply-templates/>
-                </strike>
+                </del>
             </xsl:when>
             <xsl:when test="@rend='italic'">
                 <i>
