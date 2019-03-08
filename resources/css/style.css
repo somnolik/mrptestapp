@@ -3,7 +3,7 @@
     color: #E35205;
 }
 
-span.data-hr mark mark.data-hr {
+span.data-hr, mark, mark.data-hr {
     background-color: #ffff00;
 }
 
@@ -25,7 +25,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .regest p:first-of-type {
-    font-style:italic; 
+    font-style:italic;
 }
 
 .regest p:last-of-type {
@@ -44,4 +44,3 @@ a:not([href]):not([tabindex]) {
 q {
   quotes: "„" "“" "‚" "‘";
 }
-
