@@ -465,4 +465,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <xsl:template match="tei:title">
+        <strong>
+            <xsl:apply-templates/>
+            <xsl:if test="position() != last()">
+                <xsl:text> </xsl:text>
+            </xsl:if>
+        </strong>
+    </xsl:template>
+    
 </xsl:stylesheet>
