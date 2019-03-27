@@ -474,4 +474,38 @@
         </strong>
     </xsl:template>
     
+    <xsl:template match="tei:listPerson[@type='attendants']">
+        <xsl:for-each select="tei:person">
+            <xsl:apply-templates select="."/>
+            <xsl:if test="position()!=last()">
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="tei:person">
+        <xsl:choose>
+            <xsl:when test="@role='protocol'">
+                <abbr title="Protokoll">P.</abbr>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:when>
+            <xsl:when test="@role='chair'">
+                <abbr title="Vorsitz">VS.</abbr>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:when>
+            <xsl:when test="@role='notpresent'">
+                <abbr title="abwesend">abw.</abbr>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <abbr title="anwesend">anw.</abbr>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
 </xsl:stylesheet>
