@@ -282,8 +282,12 @@ declare function app:toc($node as node(), $model as map(*)) {
     for $title in $docs
         let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
             then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
-            else data($title//tei:editionStmt/tei:edition/tei:date[1]/text()) (: picks date in meta collection :)
-        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[not(@level='s')]//text(), ', '))
+            else data($title//tei:publicationStmt//tei:date[1]/@when) (: picks date from print edition :)
+        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[@level='a']//text(), ', '))
+        let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
+        let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
+        let $editor := data($title//tei:titleStmt/tei:editor/tei:persName[1])
+        let $timespan := data($title//tei:titleStmt/tei:title[@level='m'][@type='sub'])
         let $link2doc := if ($collection)
             then
                 <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
@@ -291,6 +295,10 @@ declare function app:toc($node as node(), $model as map(*)) {
                 <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
         return
         <tr>
+            <td>{$abt}</td>
+            <td>{$vol}</td>
+            <td>{$editor}</td>
+            <td>{$timespan}</td>
            <td>{$date}</td>
            <td>{$datum}</td>
             <td>
