@@ -475,18 +475,25 @@
     </xsl:template>
     
     <xsl:template match="tei:listPerson[@type='attendants']">
+        <em>
         <xsl:for-each select="tei:person">
             <xsl:apply-templates select="."/>
             <xsl:if test="position()!=last()">
                 <xsl:text>, </xsl:text>
             </xsl:if>
         </xsl:for-each>
+        </em>
     </xsl:template>
     
-    <xsl:template match="tei:person">
+    <xsl:template match="tei:person[not(contains(ancestor::tei:div/@xml:id,'-teilnehmer'))]">
         <xsl:choose>
             <xsl:when test="@role='protocol'">
-                <abbr title="Protokoll">P.</abbr>
+                <abbr title="Protokollführer">P.</abbr>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:when>
+            <xsl:when test="@role='protocol-confirmation'">
+                <abbr title="Richtigkeit der Ausführung">RdA.</abbr>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:when>
@@ -495,8 +502,13 @@
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:when>
-            <xsl:when test="@role='notpresent'">
+            <xsl:when test="@role='absent'">
                 <abbr title="abwesend">abw.</abbr>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:when>
+            <xsl:when test="@role='present-non-member'">
+                <abbr title="außerdem anwesend">außerdem anw.</abbr>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:when>
