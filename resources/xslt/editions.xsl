@@ -221,7 +221,6 @@
                                             <xsl:text>#hd</xsl:text>
                                             <xsl:number level="any"/>
                                         </xsl:attribute>
-                                        <xsl:number level="multiple" count="tei:div" format="1.1. "/>
                                     </a>
                                     <xsl:choose>
                                         <xsl:when test=".//tei:orig">
