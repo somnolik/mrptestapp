@@ -9,13 +9,13 @@ declare option exist:serialize "method=json media-type=text/javascript";
 let $result := 
     <result>{
         
-        for $doc at $pos in collection($app:editions)//tei:TEI
-            let $title := $doc//tei:titleStmt/tei:title[@type='sub']/text()
+        for $doc at $pos in subsequence(collection($app:editions)//tei:TEI, 100, 300)
+            let $title := normalize-space(string-join(subsequence($doc//tei:titleStmt/tei:title/text(), 6, 8), ' '))
             return
                 <nodes>
                     <id>{$pos}</id>
                     <title>{$title}</title>
-                    <color>red</color>
+                    <color>#d11141</color>
                 </nodes>
     }
     {
@@ -23,70 +23,19 @@ let $result :=
         for $doc at $pos in collection($app:editions)//tei:TEI
             let $title := $doc//tei:titleStmt/tei:title[@type='sub']
             let $docID := $pos
-            for $person in $doc//tei:body//tei:rs[@type="person"]
+            for $person in $doc//tei:body//tei:persName[@ref]
                 let $key := data($person/@ref)
                 group by $key
                     return
                         <nodes>
                             <id>{$key}</id>
                             <title>{$person[1]/text()}</title>
-                            <color>blue</color>
+                            <color>#00b159</color>
                         </nodes>
     }
     {
         for $doc at $pos in collection($app:editions)//tei:TEI
-            for $person in $doc//tei:body//tei:rs[@type="person"]
-            let $key := data($person/@ref)
-                return
-                    <edges>
-                        <from>{$pos}</from>
-                        <to>{$key}</to>
-                    </edges>
-     }
-     
-     {
-        
-        for $doc at $pos in collection($app:editions)//tei:TEI
-            let $title := $doc//tei:titleStmt/tei:title[@type='sub']
-            let $docID := $pos
-            for $person in $doc//tei:body//tei:rs[@type="org"]
-                let $key := data($person/@ref)
-                group by $key
-                    return
-                        <nodes>
-                            <id>{$key}</id>
-                            <title>{$person[1]/text()}</title>
-                            <color>green</color>
-                        </nodes>
-    }
-    {
-        for $doc at $pos in collection($app:editions)//tei:TEI
-            for $person in $doc//tei:body//tei:rs[@type="org"]
-            let $key := data($person/@ref)
-                return
-                    <edges>
-                        <from>{$pos}</from>
-                        <to>{$key}</to>
-                    </edges>
-     }
-     {
-        
-        for $doc at $pos in collection($app:editions)//tei:TEI
-            let $title := $doc//tei:titleStmt/tei:title[@type='sub']
-            let $docID := $pos
-            for $person in $doc//tei:body//tei:rs[@type="work"]
-                let $key := data($person/@ref)
-                group by $key
-                    return
-                        <nodes>
-                            <id>{$key}</id>
-                            <title>{$person[1]/text()}</title>
-                            <color>grey</color>
-                        </nodes>
-    }
-    {
-        for $doc at $pos in collection($app:editions)//tei:TEI
-            for $person in $doc//tei:body//tei:rs[@type="work"]
+            for $person in $doc//tei:body//tei:persName[@ref]
             let $key := data($person/@ref)
                 return
                     <edges>
