@@ -349,6 +349,91 @@ declare function app:toc-tops($node as node(), $model as map(*)) {
         </tr>
 };
 
+
+(:~
+ : creates a table of items in the agenda derived from the documents stored in '/data/editions'
+ :)
+declare function app:tops($node as node(), $model as map(*)) {
+
+    let $collection := request:get-parameter("collection", "")
+    let $docs := if ($collection)
+        then
+            collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
+        else
+            collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    for $title in $docs
+        where count($title//tei:meeting/tei:list/tei:item) > 0 
+            for $x in $title//tei:meeting/tei:list/tei:item
+                let $link2doc := if ($collection)
+                    then
+                        <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
+                    else
+                        <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
+                let $datum := if ($x/root()//tei:titleStmt[1]//tei:date[1]/@when)
+                    then data($x/root()//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
+                    else data($x/root()//tei:publicationStmt//tei:date[1]/@when) (: picks date from print edition :)
+                let $texts := <a href="{app:hrefToDoc($title, $collection)}{$x//tei:ref/@target}">{$x//text()}</a>
+                let $abt := data($x/root()//tei:titleStmt//tei:title[@level='s']/@n)
+                let $vol := data($x/root()//tei:titleStmt//tei:title[@level='m']/@n)
+                let $editor := normalize-space($x/root()//tei:titleStmt/tei:editor/tei:persName[1])
+                let $timespan := normalize-space($x/root()//tei:titleStmt/tei:title[@level='m'][@type='sub'])
+                return
+        <tr>
+            <td>{$abt}</td>
+            <td title="Hrsg.: {$editor}, {$timespan}">{$vol}</td>
+           <td>{$datum}</td>
+           <td>{$texts}</td>
+           <td>
+                {$link2doc}
+            </td>
+        </tr>
+};
+
+(:~
+ : creates a table of items in the agenda derived from the documents stored in '/data/editions'
+ This tries to be quicker and fails completely
+ :)
+(:~ 
+declare function app:tops2($node as node(), $model as map(*)) {
+
+    let $collection := request:get-parameter("collection", "")
+    let $docs := if ($collection)
+        then
+            collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
+        else
+            collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    for $title in $docs
+        where count($title//tei:meeting/tei:list/tei:item) > 0 
+        for $title in $docs
+        where count($title//tei:meeting/tei:list/tei:item) > 0 
+        let $link2doc := if ($collection)
+            then
+                <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
+            else
+                <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
+        let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
+            then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
+            else data($title//tei:publicationStmt//tei:date[1]/@when) (: picks date from print edition :)
+        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[@level='a']//text(), ', '))
+        let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
+        let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
+        let $editor := normalize-space($title//tei:titleStmt/tei:editor/tei:persName[1])
+        let $timespan := normalize-space($title//tei:titleStmt/tei:title[@level='m'][@type='sub'])
+        for $x in $title//tei:meeting/tei:list/tei:item
+                let $texts := <a href="{app:hrefToDoc($title, $collection)}{$x//tei:ref/@target}">{$x//text()}</a>
+                return
+        <tr>
+            <td>{$abt}</td>
+            <td title="Hrsg.: {$editor}, {$timespan}">{$vol}</td>
+           <td>{$datum}</td>
+           <td>{$texts}</td>
+           <td>
+                {$link2doc}
+            </td>
+        </tr>
+};
+:)
+
 (:~
  : perfoms an XSLT transformation
 :)
