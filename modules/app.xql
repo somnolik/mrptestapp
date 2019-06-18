@@ -395,7 +395,6 @@ declare function app:tops($node as node(), $model as map(*)) {
  :)
 (:~ 
 declare function app:tops2($node as node(), $model as map(*)) {
-
     let $collection := request:get-parameter("collection", "")
     let $docs := if ($collection)
         then
@@ -403,8 +402,6 @@ declare function app:tops2($node as node(), $model as map(*)) {
         else
             collection(concat($config:app-root, '/data/editions/'))//tei:TEI
     for $title in $docs
-        where count($title//tei:meeting/tei:list/tei:item) > 0 
-        for $title in $docs
         where count($title//tei:meeting/tei:list/tei:item) > 0 
         let $link2doc := if ($collection)
             then
@@ -420,19 +417,19 @@ declare function app:tops2($node as node(), $model as map(*)) {
         let $editor := normalize-space($title//tei:titleStmt/tei:editor/tei:persName[1])
         let $timespan := normalize-space($title//tei:titleStmt/tei:title[@level='m'][@type='sub'])
         for $x in $title//tei:meeting/tei:list/tei:item
-                let $texts := <a href="{app:hrefToDoc($title, $collection)}{$x//tei:ref/@target}">{$x//text()}</a>
-                return
+                let $texts := if (not(empty($x/text()))) then <a href="{app:hrefToDoc($title, $collection)}{$x//tei:ref/@target}">{$x//text()}</a> else normalize-space(string-join($x/root()//tei:titleStmt//tei:title[@level='a']//text(), ', '))
+                
+        return 
+                
         <tr>
             <td>{$abt}</td>
             <td title="Hrsg.: {$editor}, {$timespan}">{$vol}</td>
            <td>{$datum}</td>
            <td>{$texts}</td>
-           <td>
-                {$link2doc}
-            </td>
+           <td>{$link2doc}</td>
         </tr>
 };
-:)
+
 
 (:~
  : perfoms an XSLT transformation
