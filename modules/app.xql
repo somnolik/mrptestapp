@@ -183,7 +183,7 @@ let $href := concat('show.html','?document=', app:getDocName($node), '&amp;direc
  declare function app:ft_search($node as node(), $model as map (*)) {
  if (request:get-parameter("searchexpr", "") !="") then
  let $searchterm as xs:string:= request:get-parameter("searchexpr", "")
- for $hit in collection(concat($config:app-root, '/data/editions/'))//*[.//tei:text[ft:query(.,$searchterm)]]
+ for $hit in collection(concat($config:app-root, '/data/editions'))//*[.//tei:text[ft:query(.,$searchterm)]]
     let $href := concat(app:hrefToDoc($hit), "&amp;searchexpr=", $searchterm)
     let $score as xs:float := ft:score($hit)
     order by $score descending
@@ -283,7 +283,8 @@ declare function app:toc($node as node(), $model as map(*)) {
         let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
             then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
             else data($title//tei:publicationStmt//tei:date[1]/@when) (: picks date from print edition :)
-        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[@level='a']//text(), ', '))
+        (: let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[@level='a']//text(), ', ')) :)
+        let $date := normalize-space(string-join($title//tei:body//tei:head/tei:title//text(), ', '))
         let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
         let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
         let $editor := data($title//tei:titleStmt/tei:editor/tei:persName[1])
@@ -391,9 +392,8 @@ declare function app:tops($node as node(), $model as map(*)) {
 
 (:~
  : creates a table of items in the agenda derived from the documents stored in '/data/editions'
- This tries to be quicker and fails completely
- :)
-(:~ 
+  :)
+
 declare function app:tops2($node as node(), $model as map(*)) {
     let $collection := request:get-parameter("collection", "")
     let $docs := if ($collection)
