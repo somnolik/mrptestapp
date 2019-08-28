@@ -324,7 +324,9 @@
             <xsl:choose>
                 <xsl:when test="@type='regest'">
                     <h5>
-                        <xsl:apply-templates/>
+                        <i>
+                            <xsl:apply-templates/>
+                        </i>
                     </h5>
                 </xsl:when>
                 <xsl:otherwise>
@@ -435,6 +437,11 @@
                 <i>
                     <xsl:apply-templates/>
                 </i>
+            </xsl:when>
+            <xsl:when test="@rend='Kapitälchen'">
+                <span style="font-variant:small-caps;">
+                    <xsl:apply-templates/>
+                </span>
             </xsl:when>
             <xsl:otherwise><!-- style durchreichen -->
                 <span>
