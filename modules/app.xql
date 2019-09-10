@@ -14,6 +14,7 @@ declare variable $app:placeIndex := $config:app-root||'/data/indices/listplace.x
 declare variable $app:personIndex := $config:app-root||'/data/indices/listperson.xml';
 declare variable $app:orgIndex := $config:app-root||'/data/indices/listorg.xml';
 declare variable $app:workIndex := $config:app-root||'/data/indices/listbibl.xml';
+declare variable $app:workIndex2 := $config:app-root||'/data/indices/mrp-listbibl.xml';
 declare variable $app:defaultXsl := doc($config:app-root||'/resources/xslt/xmlToHtml.xsl');
 
 declare function functx:contains-case-insensitive
@@ -504,6 +505,33 @@ declare function app:listBibl($node as node(), $model as map(*)) {
         <tr>
             <td>
                 <a href="{concat($hitHtml,data($item/@xml:id))}">{$item//tei:title[1]/text()}</a>
+            </td>
+            <td>
+                {$author}
+            </td>
+            <td>
+                {$gnd_link}
+            </td>
+        </tr>
+};
+
+(:~
+ : creates a basic work-index derived from the  '/data/indices/mrp-listbibl.xml'
+ :)
+declare function app:listBibl2($node as node(), $model as map(*)) {
+    let $hitHtml := "hits.html?searchkey="
+    for $item in doc($app:workIndex2)//tei:listBibl/tei:biblStruct
+    let $author := normalize-space(string-join($item//tei:editor//text(), ' '))
+    let $gnd := $item//tei:idno/text()
+    let $gnd_link := if ($gnd) 
+        then
+            <a href="https://de.wikipedia.org/wiki/Spezial:ISBN-Suche/{$gnd}">{$gnd}</a>
+        else
+            'no normdata provided'
+   return
+        <tr>
+            <td>
+                <a href="{concat($hitHtml,data($item/@xml:id))}">{$item//tei:title[1][not(parent::tei:series)][1]/text()}</a>
             </td>
             <td>
                 {$author}
