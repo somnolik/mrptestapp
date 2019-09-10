@@ -13,7 +13,7 @@
         <!--scroll to top start-->
         <link rel="stylesheet" href="../resources/js/scroll-to-top/css/ap-scroll-top.min.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"/>
-        <script type="text/javascript" src="$app-root/resources/js/custom.js"/>        
+        <script src="$app-root/resources/js/custom.js"/>        
         <!-- Matomo -->
         <!--<script type="text/javascript">
         var _paq = _paq || [];
@@ -50,7 +50,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="index.html">Home</a>
                                 <a class="dropdown-item" href="show.html?document=about.xml&amp;directory=meta&amp;stylesheet=meta">About this website</a>
-                                <a class="dropdown-item" href="imprint.html">Imprint</a>
+                                <a class="dropdown-item" href="https://www.oeaw.ac.at/die-oeaw/impressum/">Imprint</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -66,13 +66,14 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Indices
+                                Lists/Indices
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="persons.html">Persons</a>
-                                <a class="dropdown-item" href="places.html">Places</a>
-                                <a class="dropdown-item" href="orgs.html">Organizations</a>
-                                <a class="dropdown-item" href="bibl.html">Works</a>
+                                <!--<a class="dropdown-item" href="persons.html">Persons</a>-->
+                                <!--<a class="dropdown-item" href="places.html">Places</a>-->
+                                <!--<a class="dropdown-item" href="orgs.html">Organizations</a>-->
+                                <a class="dropdown-item" href="bibl.html">Secondary Sources</a>
+                                <a class="dropdown-item" href="mrpbibl.html">MRP volumes</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -81,13 +82,13 @@
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="calendar.html">Calendar</a>
-                                <a class="dropdown-item" href="timeline.html">Timeline</a>
+                                <!--<a class="dropdown-item" href="timeline.html">Timeline</a>
                                 <a class="dropdown-item" href="netvis.html">Entity-Document-Net</a>
                                 <a class="dropdown-item" href="cmfi-netvis.html">CMFI-Net</a>
-                                <a class="dropdown-item" href="cmfi-timeline.html">CMFI-Timeline</a>
+                                <a class="dropdown-item" href="cmfi-timeline.html">CMFI-Timeline</a>-->
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <!--<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Data endpoints
                             </a>
@@ -101,18 +102,18 @@
                                 <a class="dropdown-item" href="../analyze/beacon.xql">GND Beacon</a>
                                 <a class="dropdown-item" href="../analyze/timeline.xql">Timeline</a>
                             </div>
-                        </li>
-                        <li class="nav-item dropdown">
+                        </li>-->
+                        <!--<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Autocompletes
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="../ac/entity-ac.xql?query=">Persons</a>
-                                <a class="dropdown-item" href="../ac/entity-ac.xql?entity=place&amp;query=">Places</a>
-                                <a class="dropdown-item" href="../ac/entity-ac.xql?entity=org&amp;query=">Institutions</a>
-                                <a class="dropdown-item" href="../ac/entity-ac.xql?entity=work&amp;query=">Work</a>
+                                <a class="dropdown-item" href="../ac/entity-ac.xql?entity=place&query=">Places</a>
+                                <a class="dropdown-item" href="../ac/entity-ac.xql?entity=org&query=">Institutions</a>
+                                <a class="dropdown-item" href="../ac/entity-ac.xql?entity=work&query=">Work</a>
                             </div>
-                        </li>
+                        </li>-->
                     </ul>
                     <form method="get" action="ft_search.html" class="form-inline my-2 my-lg-0">
                         <input name="searchexpr" class="form-control mr-sm-2" type="text" placeholder="Volltextsuche" aria-label="Search" pattern=".{3,}" required="" title="Mindestens 3 Zeichen, Trunkierung mit ? für 1 Zeichen, * für 0-n Zeichen; &#xD;&#34;Phrasensuche unter Anführung&#34; &#xD;Verknüpfung mit AND | OR wie z.B. Herbst AND (Frühling OR Sommer OR Winter)"/>
@@ -167,10 +168,10 @@
         <script src="../resources/js/scroll-to-top/js/ap-scroll-top.min.js"/>
         <!--scroll to top end -->
         <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-        <script type="text/javascript">
+        <script>
                 window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"index.html","theme":"dark-bottom"};
-            </script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"/>
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.j"/>
         <script>
             /*script for loading the content of the modal */
             $(document).ready(function(){
@@ -187,12 +188,12 @@
                     });
                 });
         </script>
-        <script type="text/javascript">
+        <script>
             $(window).on('load', function(){
                 $('#myModal').modal('show');
             });
         </script>
-        <script type="text/javascript">
+        <script>
             // http://www.jqueryscript.net/animation/jQuery-Plugin-For-Fixed-Positioned-Scroll-To-Top-Button-ap-scroll-top.html
             // Setup plugin with default settings
             $.apScrollTop({
