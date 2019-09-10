@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <meta xmlns="http://exist-db.org/xquery/repo">
-    <description>Demo application Ministerratsprotokolle Digitale Edition (3. Serie) und anderes</description>
+    <description>Demo application Ministerratsprotokolle Digital Edition / TEI research data</description>
     <author ref="http://d-nb.info/gnd/129199176">Peter Andorfer</author>
+    <author ref="http://d-nb.info/gnd/13281899X">Stephan Kurz</author>
     <website/>
     <status>alpha</status>
     <license>GNU-LGPL</license>
