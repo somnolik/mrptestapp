@@ -421,6 +421,18 @@
         </q>
     </xsl:template>
     
+    <xsl:template match="tei:choice">
+        <ins style="text-decoration: none;" title="tei:choice">
+            <xsl:apply-templates/>
+        </ins>
+    </xsl:template>
+    
+    <xsl:template match="tei:seg[parent::tei:closer]"><!-- block display in closer (AhE etc) -->
+        <span style="display:block">
+            <xsl:apply-templates/>
+        </span>
+    </xsl:template>
+    
     <xsl:template match="//tei:hi">
         <xsl:choose>
             <xsl:when test="@rend='#letterspaced'">
@@ -428,7 +440,7 @@
                     <xsl:apply-templates/>
                 </span>
             </xsl:when>
-            <xsl:when test="@rend='ul'">
+            <xsl:when test="@rend='ul' or @rend='underline'">
                 <u>
                     <xsl:apply-templates/>
                 </u>
@@ -438,7 +450,7 @@
                     <xsl:apply-templates/>
                 </i>
             </xsl:when>
-            <xsl:when test="@rend='Kapitälchen'">
+            <xsl:when test="@rend='Kapitälchen' or @rend='smallcaps' or @rend='small-caps'">
                 <span style="font-variant:small-caps;">
                     <xsl:apply-templates/>
                 </span>
