@@ -344,7 +344,7 @@ declare function app:toc-tops($node as node(), $model as map(*)) {
                         <li style="list-style-type:none; margin-left:-2em;"><a href="{app:hrefToDoc($title, $collection)}{$x//tei:ref/@target}">{$x//text()}</a></li>
         let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
         let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
-        let $editor := normalize-space($title//tei:titleStmt/tei:editor/tei:persName[1])
+        let $editor := normalize-space(string-join($title//tei:titleStmt/tei:editor/tei:persName//text()))
         let $timespan := normalize-space($title//tei:titleStmt/tei:title[@level='m'][@type='sub'])
         
         return
