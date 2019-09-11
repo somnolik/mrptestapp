@@ -51,7 +51,8 @@
                         <item>Sources for this demo app are available on <ref target="https://www.github.com/skurzinz/mrptestapp/">GitHub</ref>.</item>
                     </list>
                 </p>
-                <p>Workflow diagram see <ref target="mrpretro.gv.svg">SVG file</ref>.</p>
+                <p>Workflow diagram see <ref target="../data/mrpretro.gv.svg">SVG file</ref>.</p>
+                <p>APIS auxiliary data for the digital edition workflow is available on <ref target="https://mpr.acdh.oeaw.ac.at/">https://mpr.acdh.oeaw.ac.at/</ref>.</p>
             </div>
         </body>
     </text>
