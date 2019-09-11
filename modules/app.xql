@@ -116,6 +116,14 @@ let $name := functx:substring-after-last(document-uri(root($node)), '/')
 };
 
 (:~
+: returns the base name of the document that has been TEIified.
+:)
+declare function app:getHWDocName($node as node()){
+let $name := concat(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-z'), '/', translate(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-tei'), '-z0', '-z'), '.xml')
+    return $name
+};
+
+(:~
 : returns the (relativ) name of the collection the passed in node is located at.
 :)
 declare function app:getColName($node as node()){
