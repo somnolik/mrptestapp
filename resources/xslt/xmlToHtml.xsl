@@ -181,7 +181,7 @@
                 <div>
                     <xsl:apply-templates select="//tei:text"/>
                 </div>
-            </div>AAA
+            </div>
             <xsl:if test="tei:TEI/tei:text/tei:body//tei:note">
                 <div class="card-footer">
                         <div class="footnotes">
@@ -299,6 +299,37 @@
                 <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
             </span>
         </xsl:element>
+    </xsl:template>
+    
+    
+    <xsl:template match="tei:listEvent">
+        <ul>
+            <xsl:apply-templates/>
+        </ul>
+    </xsl:template>
+    
+    <xsl:template match="tei:event">
+        <li>
+            <a href="{./@ref}" title="externe Quelle: {./@ref}" target="hw">
+                <xsl:apply-templates/>
+            </a>
+        </li>
+    </xsl:template>
+    
+    <xsl:template match="tei:head[parent::tei:event]">
+        <a>
+            <xsl:attribute name="name">
+                <xsl:text>hd</xsl:text>
+                <xsl:number level="any"/>
+            </xsl:attribute>
+            <xsl:text> </xsl:text>
+        </a>
+            <xsl:apply-templates/>
+        <br/>
+    </xsl:template>
+    
+    <xsl:template match="tei:label[ancestor::tei:event]">
+        <xsl:value-of select="substring-after(., 'Tagesordnungspunkt im österreichischen Ministerrat: ')"/> 
     </xsl:template>
     
     <xsl:template match="tei:*/@corresp">
