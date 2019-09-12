@@ -23,6 +23,7 @@ let $dates := ($notBefores, $whens)
     let $data := <listEvent type="generated">{        
     for $title in $docs
         where count($title//tei:meeting/tei:list/tei:item) > 0 
+        let $id := concat('mrp-events-', $title//tei:body/tei:div/@xml:id[1])
         let $link2doc := if ($collection)
             then
                 <a href="{app:hrefToDoc($title, $collection)}">{app:getHWDocName($title)}</a>
@@ -42,7 +43,7 @@ let $dates := ($notBefores, $whens)
         
         return
         
-            <event ref="{concat($baseurl,$link2doc)}" when="{$datum}" where="Wien">
+            <event xml:id="{$id}" ref="{concat($baseurl,$link2doc)}" when="{$datum}" where="Wien">
             <head>{$date}</head>
             <label>Ministerratssitzung <date when="{$datum}">{$datum}</date>, aus Band {$abt}/{$vol}, {$timespan}</label>
                 <desc>
