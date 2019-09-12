@@ -32,7 +32,7 @@ let $dates := ($notBefores, $whens)
         let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
             then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
             else data($title//tei:publicationStmt//tei:date[1]/@when) (: picks date from print edition :)
-        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[@level='a']//text(), ', '))
+        let $date := normalize-space(string-join($title//tei:div/tei:head/tei:title//text(), ' '))
         let $texts := for $x in $title//tei:meeting/tei:list/tei:item
                     return
                         <event ref="{concat($baseurl, $link2doc, '#', $x//tei:label/tei:num)}" when="{$datum}" where="Wien"><label>Tagesordnungspunkt im österreichischen Ministerrat: {concat($x//tei:num/text(), ' ', $x//tei:ref/text())}</label></event>
