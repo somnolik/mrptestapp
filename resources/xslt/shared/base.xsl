@@ -312,9 +312,7 @@
             <xsl:text> </xsl:text>
         </a>
         <h3>
-            <div>
                 <xsl:apply-templates/>
-            </div>
         </h3>
     </xsl:template><!--  Quotes / Zitate -->
     <xsl:template match="tei:q">
@@ -406,7 +404,7 @@
             </div>
         </xsl:for-each>
     </xsl:template>
-    
+        
     <xsl:template match="tei:title">
         <strong>
             <xsl:apply-templates/>
