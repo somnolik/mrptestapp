@@ -35,7 +35,7 @@
     <body role="document" class="contained fixed-nav" id="body">
         <header>
             <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white box-shadow">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="https://www.oeaw.ac.at/">
                     <img src="../resources/img/oeaw-logo-small.png" alt="ÖAW Logo" title="ÖAW logo"/>
                 </a>
                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,10 @@
                                 <!--<a class="dropdown-item" href="orgs.html">Organizations</a>-->
                                 <a class="dropdown-item" href="bibl.html">Secondary Sources</a>
                                 <a class="dropdown-item" href="mrpbibl.html">MRP volumes</a>
+                                <a class="dropdown-item" href="show.html?document=mrptestapp_analyze_events.xql.xml&amp;directory=indices">
+                                    <code>listEvents</code> extracted from 1484-67 MRP</a>
+                                <a class="dropdown-item" href="/exist/restxq/mrptestapp/api/collections/indices/mrptestapp_analyze_events.xql.xml">
+                                    <code>listEvents</code> (raw TEI)</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -88,7 +92,7 @@
                                 <a class="dropdown-item" href="cmfi-timeline.html">CMFI-Timeline</a>-->
                             </div>
                         </li>
-                        <!--<li class="nav-item dropdown">
+                       <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Data endpoints
                             </a>
@@ -100,7 +104,7 @@
                                 <a class="dropdown-item" href="../../../../exist/restxq/mrptestapp/api/entity-types">List all Entity-Types</a>
                                 <a class="dropdown-item" href="../analyze/cmfi2net.xql">Network Data (GEFX)</a>
                                 <a class="dropdown-item" href="../analyze/beacon.xql">GND Beacon</a>
-                                <a class="dropdown-item" href="../analyze/timeline.xql">Timeline</a>
+                                <a class="dropdown-item" href="../analyze/events.xql">listEvents</a>
                             </div>
                         </li>-->
                         <!--<li class="nav-item dropdown">
@@ -171,7 +175,7 @@
         <script>
                 window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"index.html","theme":"dark-bottom"};
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.j"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"/>
         <script>
             /*script for loading the content of the modal */
             $(document).ready(function(){
