@@ -35,7 +35,7 @@ let $dates := ($notBefores, $whens)
         let $date := normalize-space(string-join($title//tei:div/tei:head/tei:title//text(), ' '))
         let $texts := for $x in $title//tei:meeting/tei:list/tei:item
                     return
-                        <event ref="{concat($baseurl, $link2doc, '#', $x//tei:label/tei:num)}" when="{$datum}" where="Wien"><label>Tagesordnungspunkt im österreichischen Ministerrat: {concat($x//tei:num/text(), ' ', $x//tei:ref/text())}</label></event>
+                        <event type="agenda_item" ref="{concat($baseurl, $link2doc, '#', $x//tei:label/tei:num)}" when="{$datum}" where="Wien"><label>Tagesordnungspunkt im österreichischen Ministerrat: {concat($x//tei:num/text(), ' ', $x//tei:ref/text())}</label></event>
         let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
         let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
         let $editor := normalize-space($title//tei:titleStmt/tei:editor/tei:persName[1])
@@ -43,7 +43,7 @@ let $dates := ($notBefores, $whens)
         
         return
         
-            <event xml:id="{$id}" ref="{concat($baseurl,$link2doc)}" when="{$datum}" where="Wien">
+            <event xml:id="{$id}" ref="{concat($baseurl,$link2doc)}" when="{$datum}" where="Wien" type="session">
             <head>{$date}</head>
             <label>Ministerratssitzung <date when="{$datum}">{$datum}</date>, aus Band {$abt}/{$vol}, {$timespan}</label>
                 <desc>
