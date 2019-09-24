@@ -119,7 +119,11 @@ let $name := functx:substring-after-last(document-uri(root($node)), '/')
 : returns the base name of the document that has been TEIified.
 :)
 declare function app:getHWDocName($node as node()){
-let $name := concat(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-z'), '/', translate(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-tei'), '-z0', '-z'), '.xml')
+let $name := if (contains(document-uri(root($node), 'a1-b1')) 
+    then 
+        translate(concat(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-z'), '/', translate(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-tei'), '-z0', '-z'), '.xml'), '/a1-b1', '/a1') 
+    else
+        concat(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-z'), '/', translate(substring-before(functx:substring-after-last(document-uri(root($node)), '/'), '-tei'), '-z0', '-z'), '.xml')
     return $name
 };
 
