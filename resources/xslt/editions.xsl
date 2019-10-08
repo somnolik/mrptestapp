@@ -404,7 +404,7 @@
     </xsl:template>
    
     <xsl:template match="tei:idno">
-        <span>
+        <span class="idno">
             <xsl:value-of select="@type"/>
             <xsl:text>. </xsl:text>
             <xsl:value-of select="."/>
@@ -533,6 +533,27 @@
                 <xsl:value-of select="normalize-space(.)"/>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="tei:p[@rend='list']">
+        <xsl:element name="p">
+            <xsl:attribute name="style">margin-left:2em;</xsl:attribute>
+            <xsl:apply-templates/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="tei:p[ancestor::tei:div[@type='regest']]">
+        <xsl:element name="p">
+            <em>
+                <xsl:apply-templates/>
+            </em>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="tei:div[@type='protocol-head']">
+        <div class="protocol-head">
+            <xsl:apply-templates/>
+        </div>
     </xsl:template>
     
 </xsl:stylesheet>

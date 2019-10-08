@@ -29,7 +29,6 @@ a:not([href]):not([tabindex]) {
 }
 
 .regest p:last-of-type {
-    margin-left: -5%;
     margin-top: 1em;
 }
 
@@ -43,6 +42,15 @@ a:not([href]):not([tabindex]) {
 
 q {
   quotes: "„" "“" "‚" "‘";
+}
+
+.idno span:last-of-type:after {
+    margin-bottom: 2em;
+    content: '&amp;';
+}
+
+.protocol-head {
+    margin-top:2em;
 }
 
 .corner-ribbon{
