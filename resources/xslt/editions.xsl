@@ -11,6 +11,8 @@
     <xsl:param name="currentIx"/>
     <xsl:param name="amount"/>
     <xsl:param name="progress"/>
+    
+    <xsl:preserve-space elements="tei:note note tei:hi hi"/>
     <!--
 ##################################
 ### Seitenlayout und -struktur ###
@@ -389,6 +391,7 @@
             </sup>
         </xsl:element>
     </xsl:template>
+    
     <xsl:template match="tei:note[@type='variant']">
         <xsl:element name="a">
             <xsl:attribute name="name">
@@ -431,6 +434,18 @@
         </ins>
     </xsl:template>
     
+    <xsl:template match="tei:closer">
+        <div class="closer">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+    
+    <xsl:template match="tei:dateline">
+        <p class="dateline">
+            <xsl:apply-templates/>
+        </p>
+    </xsl:template>
+    
     <xsl:template match="tei:seg[parent::tei:closer]"><!-- block display in closer (AhE etc) -->
         <span style="display:block">
             <xsl:apply-templates/>
@@ -449,12 +464,12 @@
                     <xsl:apply-templates/>
                 </u>
             </xsl:when>
-            <xsl:when test="@rend='italic'">
+            <xsl:when test="@rend=('italic', 'Anmerkung-kursiv')">
                 <em>
                     <xsl:apply-templates/>
                 </em>
             </xsl:when>
-            <xsl:when test="@rend='Kapitälchen' or @rend='smallcaps' or @rend='small-caps'">
+            <xsl:when test="@rend=('Kapitälchen', 'smallcaps', 'small-caps')">
                 <span style="font-variant:small-caps;">
                     <xsl:apply-templates/>
                 </span>
