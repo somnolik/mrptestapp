@@ -314,6 +314,12 @@
         <h3>
                 <xsl:apply-templates/>
         </h3>
+    </xsl:template>
+    <xsl:template match="tei:num">
+        <xsl:apply-templates/>
+    </xsl:template>
+    <xsl:template match="tei:label">
+        <xsl:apply-templates/>
     </xsl:template><!--  Quotes / Zitate -->
     <xsl:template match="tei:q">
         <xsl:element name="i">
