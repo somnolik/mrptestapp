@@ -192,12 +192,12 @@
         </div>-->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">
-                    <!--<h2 align="center">
+                <!--<h3 class="card-title">
+                    <!-\-<h2 align="center">
                         Body
-                    </h2>-->
+                    </h2>-\->
                     
-                </h3>
+                </h3>-->
                 <p align="center">
                     <a>
                         <xsl:attribute name="href">
@@ -227,10 +227,9 @@
                                             <xsl:apply-templates select=".//tei:orig"/>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <xsl:value-of select="."/>
+                                            <xsl:apply-templates/>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    
                                 </li>
                             </xsl:for-each>
                         </ul>
@@ -320,7 +319,6 @@
             </xsl:attribute>
             <xsl:text> </xsl:text>
         </a>
-        <div>
             <xsl:choose>
                 <xsl:when test="@type='regest'">
                     <h5>
@@ -345,7 +343,6 @@
                     </h3>
                 </xsl:otherwise>
             </xsl:choose>
-        </div>
     </xsl:template>
     
     <xsl:template match="tei:pb">
