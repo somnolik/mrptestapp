@@ -209,9 +209,9 @@
             </div>
             <div class="card-body">
                 <xsl:if test="//tei:div/tei:head">
-                    <h3 id="clickme">
+                    <h5 id="clickme">
                         <abbr title="Click to display Table of Contents">[Table of Contents]</abbr>
-                    </h3>
+                    </h5>
                     <div id="headings" class="readmore">
                         <ul>
                             <xsl:for-each select="/tei:TEI/tei:text/tei:body//tei:div/tei:head">
@@ -327,6 +327,11 @@
                         </i>
                     </h5>
                 </xsl:when>
+                <xsl:when test="parent::tei:div[@type='agenda_item']">
+                    <h4>
+                        <xsl:apply-templates/>
+                    </h4>
+                </xsl:when>
                 <xsl:otherwise>
                     <h3>
                         <xsl:apply-templates/>
@@ -408,7 +413,9 @@
             <xsl:value-of select="@type"/>
             <xsl:text>. </xsl:text>
             <xsl:value-of select="."/>
-            <xsl:if test="position() != last()"> – </xsl:if>
+            <xsl:if test="position() != last()-1">
+                <xsl:text> – </xsl:text>
+            </xsl:if><!-- no clue why this counts to idno +1 -->
         </span>
     </xsl:template>
     
@@ -443,9 +450,9 @@
                 </u>
             </xsl:when>
             <xsl:when test="@rend='italic'">
-                <i>
+                <em>
                     <xsl:apply-templates/>
-                </i>
+                </em>
             </xsl:when>
             <xsl:when test="@rend='Kapitälchen' or @rend='smallcaps' or @rend='small-caps'">
                 <span style="font-variant:small-caps;">
@@ -537,16 +544,23 @@
     
     <xsl:template match="tei:p[@rend='list']">
         <xsl:element name="p">
-            <xsl:attribute name="style">margin-left:2em;</xsl:attribute>
+            <xsl:attribute name="class">list</xsl:attribute>
             <xsl:apply-templates/>
         </xsl:element>
     </xsl:template>
     
     <xsl:template match="tei:p[ancestor::tei:div[@type='regest']]">
         <xsl:element name="p">
-            <em>
-                <xsl:apply-templates/>
-            </em>
+            <xsl:choose>
+                <xsl:when test=".[@ana='participant_list']">
+                    <em>
+                        <xsl:apply-templates/>
+                    </em>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:element>
     </xsl:template>
     
