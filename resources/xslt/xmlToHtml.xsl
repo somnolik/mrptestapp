@@ -329,7 +329,22 @@
     </xsl:template>
     
     <xsl:template match="tei:label[ancestor::tei:event]">
-        <xsl:value-of select="substring-after(., 'Tagesordnungspunkt im österreichischen Ministerrat: ')"/> 
+        <xsl:choose>
+            <xsl:when test="contains(.,'):')">
+                <xsl:value-of select="substring-after(., '):')"/> <!-- strips off "TOP in Sitzung ... Ministerrats" -->
+            </xsl:when>
+            <xsl:when test="contains(ancestor::tei:event,'Beilage')">
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="ancestor::tei:event/@ref[1]"/>
+                    </xsl:attribute>
+                    Beilage</a>
+            </xsl:when>
+            <xsl:when test="starts-with(., 'Minister')"/>
+            <xsl:otherwise>
+                <xsl:text>Beilage</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="tei:*/@corresp">
