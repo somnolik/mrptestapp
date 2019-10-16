@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <!--<div class="regest">
+        <div class="regest">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -112,7 +112,7 @@
                                                 <xsl:value-of select="."/>
                                             </abbr>
                                             <br/>
-                                        </xsl:for-each><!-\-<xsl:apply-templates select="//tei:msIdentifier"/>-\->
+                                        </xsl:for-each><!--<xsl:apply-templates select="//tei:msIdentifier"/>-->
                                     </td>
                                 </tr>
                             </xsl:if>
@@ -185,7 +185,7 @@
                             </tr>                            
                         </tbody>
                     </table>
-                    <div class="card-footer">
+                  <!--  <div class="card-footer">
                         <p style="text-align:center;">
                             <a>
                                 <xsl:attribute name="href">
@@ -194,10 +194,10 @@
                                 see the TEI source of this document
                             </a>
                         </p>
-                    </div>
+                    </div>-->
                 </div>
             </div>
-        </div>-->
+        </div>
         <div class="card">
             <div class="card-header">
                 <!--<h3 class="card-title">
