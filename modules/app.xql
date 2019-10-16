@@ -359,6 +359,59 @@ declare function app:toc-tops($node as node(), $model as map(*)) {
         </tr>
 };
 
+(:~
+ : creates a list of events based on the items in the agenda derived from the documents stored in '/data/editions'
+ :)
+declare function app:events-tops($node as node(), $model as map(*)) {
+
+    let $collection := request:get-parameter("collection", "")
+    let $baseurl := "https://hw.oeaw.ac.at/ministerrat/"
+    let $docs := if ($collection)
+        then
+            collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
+        else
+            collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    for $title in $docs
+        where count($title//tei:meeting/tei:list/tei:item) > 0 
+        let $link2doc := if ($collection)
+            then
+                <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
+            else
+                <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
+        let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
+            then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
+            else data($title//tei:publicationStmt//tei:date[1]/@when) (: picks date from print edition :)
+        let $date := normalize-space(string-join($title//tei:titleStmt//tei:title[@level='a']//text(), ', '))
+        let $texts := for $x in $title//tei:meeting/tei:list/tei:item
+                    return
+                        <event><a href="{app:hrefToDoc($title, $collection)}{$x//tei:ref/@target}">{$x//text()}</a></event>
+        let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
+        let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
+        let $editor := normalize-space($title//tei:titleStmt/tei:editor/tei:persName[1])
+        let $timespan := normalize-space($title//tei:titleStmt/tei:title[@level='m'][@type='sub'])
+        
+        return
+        <listEvent type="generated">
+            <event src="{concat($baseurl,$link2doc)}" when="{$datum}" where="Wien">
+            <head>{$date}</head>
+            <label>Ministerratssitzung {$datum}, aus Band {$abt}/{$vol}, {$timespan}</label>
+                <desc>
+                    <listEvent>
+                        {$texts}
+                    </listEvent>
+                </desc>
+            </event>
+        </listEvent>
+        (:<tr>
+            <td>{$abt}</td>
+            <td title="Hrsg.: {$editor}, {$timespan}">{$vol}</td>
+           <td>{$date}<ul>{$texts}</ul></td>
+           <td>{$datum}</td>
+            <td>
+                {$link2doc}
+            </td>
+        </tr>:)
+};
 
 (:~
  : creates a table of items in the agenda derived from the documents stored in '/data/editions'
