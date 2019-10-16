@@ -206,14 +206,15 @@
                     </h2>-\->
                     
                 </h3>-->
-                <p align="center">
-                    <a>
+                    <div align="right">
+                        <a>
                         <xsl:attribute name="href">
                             <xsl:value-of select="$path2source"/>
                         </xsl:attribute>
-                        see the TEI source of this document
+                        TEI source
                     </a>
-                </p>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <xsl:if test="//tei:div/tei:head">
