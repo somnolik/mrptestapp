@@ -19,6 +19,12 @@
 ##################################
 -->
     <xsl:template match="/">
+        <xsl:variable name="docname">
+            <xsl:value-of select="$document"/>
+        </xsl:variable>
+        <xsl:variable name="volname">
+            <xsl:value-of select="substring-before($docname,'-z')"/>
+        </xsl:variable>
         <div class="page-header">
             <div class="row" style="text-align:left">
                 <div class="col-md-2">
