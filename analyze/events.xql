@@ -13,12 +13,13 @@ let $whens := collection($app:editions)//tei:TEI//tei:date[@when castable as xs:
 let $dates := ($notBefores, $whens)
 
     let $collection := request:get-parameter("collection", "")
-    let $baseurl := "https://hw.oeaw.ac.at/ministerrat/serie-1/"
     let $docs := if ($collection)
         then
             collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
         else
             collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    let $baseurl := "https://hw.oeaw.ac.at/ministerrat/serie-1/"
+    let $baseurlnew := "https://mrptestapp.acdh-dev.oeaw.ac.at/" 
             
     let $data :=
     <TEI xmlns="http://www.tei-c.org/ns/1.0">
@@ -68,13 +69,18 @@ let $dates := ($notBefores, $whens)
         <p>Work in progress with a rudimentary display, see <ref target="/exist/restxq/mrptestapp/api/collections/indices/mrptestapp_analyze_events.xql.xml">source</ref> for details. No listPerson yet included for the time being.</p>
     <listEvent type="generated">{        
     for $title in $docs
-        where count($title//tei:meeting/tei:list/tei:item) > 0 
+        where count($title//tei:meeting/tei:list/tei:item) > 0 and count($title//tei:titleStmt/tei:title) > 1
         let $id := concat('mrp-events-', $title//tei:body/tei:div/@xml:id[1])
         let $link2doc := if ($collection)
             then
                 <a href="{app:hrefToDoc($title, $collection)}">{app:getHWDocName($title)}</a>
             else
                 <a href="{app:hrefToDoc($title)}">{app:getHWDocName($title)}</a>
+        let $link2docnew := if ($collection)
+            then
+                <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
+            else
+                <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
         let $link2doc := replace($link2doc, 'a1-b1', 'a1') (: special case where hw.oeaw.ac.at is providing inconsistent directory and file name schema for vol I/1 :)
         let $datum := if ($title//tei:titleStmt[1]//tei:date[1]/@when)
             then data($title//tei:titleStmt[1]//tei:date[1]/@when)(:/format-date(xs:date(@when), '[D02].[M02].[Y0001]')):)
@@ -82,23 +88,34 @@ let $dates := ($notBefores, $whens)
         let $date := normalize-space(string-join($title//tei:div/tei:head/tei:title//text(), ' '))
         let $texts := for $x in $title//tei:meeting/tei:list/tei:item
                     return
-                        <event type="agenda_item" ref="{concat($baseurl, $link2doc, '#', $x//tei:label/tei:num)}" when="{$datum}" where="Wien" xml:id="{concat($id, '-', translate($x//tei:label/tei:num, '][ ', ''))}"><label>{normalize-space(concat('Tagesordnungspunkt ', $x//tei:num/text(), ' im österreichischen Ministerrat (', $datum, '): ', $x//tei:ref/text()))}</label></event>
+                        if (contains($title//tei:titleStmt/tei:title, 'cis'))  
+                        then <event type="agenda_item" ref="{concat($baseurlnew, 'pages/show.html?directory=editions&amp;document=', $link2docnew, '#', $x//tei:label/tei:num)}" when="{$datum}" where="Wien" xml:id="{concat($id, '-', translate($x//tei:label/tei:num, '][ ', ''))}"><label>{normalize-space(concat('Tagesordnungspunkt ', $x//tei:num/text(), ' im österreichischen Ministerrat (', $datum, '): ', $x//tei:ref/text()))}</label></event>
+                        else <event type="agenda_item" ref="{concat($baseurl, $link2doc, '#', $x//tei:label/tei:num)}" when="{$datum}" where="Wien" xml:id="{concat($id, '-', translate($x//tei:label/tei:num, '][ ', ''))}"><label>{normalize-space(concat('Tagesordnungspunkt ', $x//tei:num/text(), ' im österreichischen Ministerrat (', $datum, '): ', $x//tei:ref/text()))}</label></event>
         let $abt := data($title//tei:titleStmt//tei:title[@level='s']/@n)
         let $vol := data($title//tei:titleStmt//tei:title[@level='m']/@n)
         let $editor := normalize-space($title//tei:titleStmt/tei:editor/tei:persName[1])
         let $timespan := normalize-space($title//tei:titleStmt/tei:title[@level='m'][@type='sub'])
         
         return
-        
-            <event xml:id="{$id}" ref="{concat($baseurl, $link2doc)}" when="{$datum}" where="Wien" type="session">
-            <head>{$date}</head>
-            <label>Ministerratssitzung <date when="{$datum}">{$datum}</date>, aus Band {$abt}/{$vol}, {$timespan}</label>
-                <desc>
-                    <listEvent type="generated">
-                        {$texts}
-                    </listEvent>
-                </desc>
-            </event>
+            if (contains($title//tei:titleStmt/tei:title, 'cis'))
+            then <event xml:id="{$id}" ref="{concat($baseurlnew, $link2docnew)}" when="{$datum}" where="Wien" type="session">
+                    <head>{$date}</head>
+                    <label>Ministerratssitzung <date when="{$datum}">{$datum}</date>, aus Band {$abt}/{$vol}, {$timespan}</label>
+                    <desc>
+                        <listEvent type="generated">
+                            {$texts}
+                        </listEvent>
+                    </desc>
+                </event>
+            else <event xml:id="{$id}" ref="{concat($baseurl, $link2doc)}" when="{$datum}" where="Wien" type="session">
+                <head>{$date}</head>
+                    <label>Ministerratssitzung <date when="{$datum}">{$datum}</date>, aus Band {$abt}/{$vol}, {$timespan}</label>
+                    <desc>
+                        <listEvent type="generated">
+                            {$texts}
+                        </listEvent>
+                    </desc>
+                </event>
         }
         </listEvent>
         </body>
