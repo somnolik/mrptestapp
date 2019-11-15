@@ -113,7 +113,7 @@
                     <xsl:value-of select="."/>
                 </xsl:element>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="@target[starts-with(., 'http')]"><!-- external links -->
                 <xsl:element name="a">
                     <xsl:attribute name="href">
                         <xsl:value-of select="@target"/>
@@ -122,6 +122,18 @@
                         <xsl:value-of select="concat(normalize-space(.), ': ', normalize-space(@target))"/>
                     </xsl:attribute>
                     <xsl:attribute name="target">_blank</xsl:attribute>
+                    <xsl:value-of select="."/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="@target"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="target">_self</xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:value-of select="concat(normalize-space(.), ': ', normalize-space(@target))"/>
+                    </xsl:attribute>
                     <xsl:value-of select="."/>
                 </xsl:element>
             </xsl:otherwise>
