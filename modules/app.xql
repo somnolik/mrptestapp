@@ -317,6 +317,17 @@ declare function app:toc($node as node(), $model as map(*)) {
         </tr>
 };
 
+declare function app:docxlistdir($node as node(), $model as map(*)) {
+  let $collection := request:get-parameter("collection", "")
+  let $docs := if ($collection)
+        then
+            xmldb:get-child-resources(concat($config:app-root, '/data/', $collection, '/docx'))
+        else
+            xmldb:get-child-resources(concat($config:app-root, '/data/editions/docx'))
+  for $item in $docs
+    return <tr><td><a href="{concat($config:app-root, '/data/editions/docx/', $item)}">{$item}</a></td></tr>
+};
+
 (:~
  : creates a table of contents based on the items in the agenda derived from the documents stored in '/data/editions'
  :)
