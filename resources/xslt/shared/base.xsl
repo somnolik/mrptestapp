@@ -113,26 +113,10 @@
                     <xsl:value-of select="."/>
                 </xsl:element>
             </xsl:when>
-            <xsl:when test="@target[starts-with(., 'http')]"><!-- external links -->
-                <xsl:element name="a">
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="@target"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="title">
-                        <xsl:value-of select="concat(normalize-space(.), ': ', normalize-space(@target))"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="target">_blank</xsl:attribute>
-                    <xsl:value-of select="."/>
-                </xsl:element>
-            </xsl:when>
             <xsl:otherwise>
                 <xsl:element name="a">
                     <xsl:attribute name="href">
                         <xsl:value-of select="@target"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="target">_self</xsl:attribute>
-                    <xsl:attribute name="title">
-                        <xsl:value-of select="concat(normalize-space(.), ': ', normalize-space(@target))"/>
                     </xsl:attribute>
                     <xsl:value-of select="."/>
                 </xsl:element>
@@ -330,12 +314,6 @@
         <h3>
                 <xsl:apply-templates/>
         </h3>
-    </xsl:template>
-    <xsl:template match="tei:num">
-        <xsl:apply-templates/>
-    </xsl:template>
-    <xsl:template match="tei:label">
-        <xsl:apply-templates/>
     </xsl:template><!--  Quotes / Zitate -->
     <xsl:template match="tei:q">
         <xsl:element name="i">
@@ -586,6 +564,26 @@
         <li>
             <xsl:apply-templates/>
         </li>
+    </xsl:template>
+    
+    <xsl:template match="tei:figure">
+        <figure>
+            <figcaption>
+                <xsl:value-of select="./head"/>
+            </figcaption>
+            <xsl:apply-templates/>
+        </figure>
+    </xsl:template>
+    
+    <xsl:template match="tei:graphic">
+        <img width="100%">
+            <xsl:attribute name="src">
+                <xsl:value-of select="@url"/>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+                <xsl:value-of select="@url"/>
+            </xsl:attribute>
+        </img>
     </xsl:template>
  
 </xsl:stylesheet>
