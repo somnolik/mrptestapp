@@ -341,8 +341,7 @@ declare function app:docxlistdir($node as node(), $model as map(*)) {
         else
             xmldb:get-child-resources(concat($config:app-root, '/data/editions/docx'))
   for $item in $docs
-    return <tr><td><a href="{app:download(concat($config:app-root, '/data/editions/docx/', $item))}">{$item}</a></td></tr>
-    (: util:binary-doc()? :) 
+    return <tr><td><a href="{concat('../data/editions/docx/', $item)}">{$item}</a></td><td><a href="{concat('../data/editions/docx/', $item)}">.docx</a></td></tr>
 };
 
 (:~
