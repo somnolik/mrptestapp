@@ -316,23 +316,8 @@ declare function app:toc($node as node(), $model as map(*)) {
             </td>
         </tr>
 };
-
-declare function app:download($node as node(), $model as map(*)) {
-   let $item := response:stream-binary($node, 'application/xml') 
-   return $item
-};
-
-(: snippet from https://books.google.at/books?id=0evSBQAAQBAJ&pg=PA213&lpg=PA213&dq=exist-db+dowload+binary+file&source=bl&ots=VPTqKh-DRY&sig=ACfU3U0ope53SfJfydnU4BHSRnTRajYn-Q&hl=de&sa=X&ved=2ahUKEwiovOG0ouzlAhWJfFAKHUInAzkQ6AEwA3oECAgQAQ#v=onepage&q=exist-db%20dowload%20binary%20file&f=false :)
-(: response:stream-binary(
-    util:string-to binary(
-        util:serialize($input, 'method=xml'), 'UTF-8
-        ),
-        'application/octet-stream',
-        'download.xml'
-    )
-:) 
         
-
+(: creates a TOC of files in /data/editions/docx with hard-coded path :)
 declare function app:docxlistdir($node as node(), $model as map(*)) {
   let $collection := request:get-parameter("collection", "")
   let $docs := if ($collection)
