@@ -317,6 +317,10 @@ declare function app:toc($node as node(), $model as map(*)) {
         </tr>
 };
 
+declare function app:download($node as node(), $model as map(*)) {
+   return response:stream-binary($item, 'application/xml')
+};
+
 declare function app:docxlistdir($node as node(), $model as map(*)) {
   let $collection := request:get-parameter("collection", "")
   let $docs := if ($collection)
@@ -326,6 +330,7 @@ declare function app:docxlistdir($node as node(), $model as map(*)) {
             xmldb:get-child-resources(concat($config:app-root, '/data/editions/docx'))
   for $item in $docs
     return <tr><td><a href="{concat($config:app-root, '/data/editions/docx/', $item)}">{$item}</a></td></tr>
+    (: util:binary-doc()? :) 
 };
 
 (:~
