@@ -95,6 +95,9 @@
                     <xsl:attribute name="id">
                         <xsl:value-of select="@xml:id"/>
                     </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:value-of select="@type"/>
+                    </xsl:attribute>
                     <xsl:apply-templates/>
                 </xsl:element>
             </xsl:when>
