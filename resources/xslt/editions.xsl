@@ -209,13 +209,13 @@
                 <div align="center">
                     <div align="left">
                         <a href="show.html?document={$volname}-einleitung-tei.xml&amp;directory=editions">Einleitung zum Band</a>
-                        <xsl:if test="//tei:div/tei:head">
+                        <!--<xsl:if test="{$collection-name}//tei:div/tei:head">
                             <h5 id="clickme">
                                 <abbr title="Click to display Table of Contents">Einleitung zum Band</abbr>
                             </h5>
                             <div id="headings" class="readmore">
                                 <ul>
-                                    <!--<xsl:for-each select="concat($collection-name, '/', $volname)-einleitung-tei.xml/tei:TEI/tei:text/tei:body//tei:div/tei:head">-->
+                                    <!-\-<xsl:for-each select="concat($collection-name, '/', $volname)-einleitung-tei.xml/tei:TEI/tei:text/tei:body//tei:div/tei:head">-\->
                                         <li>
                                             <a>
                                                 <xsl:attribute name="href">
@@ -232,10 +232,10 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </li>
-                                    <!--</xsl:for-each>-->
+                                    <!-\-</xsl:for-each>-\->
                                 </ul>
                             </div>
-                        </xsl:if>
+                        </xsl:if>-->
                     </div>
                     <div align="right">
                         <a>
