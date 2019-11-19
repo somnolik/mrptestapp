@@ -7,8 +7,6 @@
         <link rel="shortcut icon" href="../resources/images/exist_icon_16x16.ico"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/fundament.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"/>
-        
-        
         <link rel="stylesheet" type="text/css" href="$app-root/resources/css/style.css"/>
         <!--scroll to top start-->
         <link rel="stylesheet" href="../resources/js/scroll-to-top/css/ap-scroll-top.min.css"/>
@@ -38,7 +36,7 @@
                 <a class="navbar-brand" href="https://www.oeaw.ac.at/">
                     <img src="../resources/img/oeaw-logo-small.png" alt="ÖAW Logo" title="ÖAW logo"/>
                 </a>
-                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"/>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -94,7 +92,7 @@
                                 <a class="dropdown-item" href="cmfi-timeline.html">CMFI-Timeline</a>-->
                             </div>
                         </li>
-                       <!-- <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Data endpoints
                             </a>
@@ -126,52 +124,51 @@
                         <button class="btn btn-main btn-outline-primary btn-mg" type="submit">Search</button>
                     </form>
                     <div style="margin:1rem;">
-                        <a href="https://twitter.com/MinisterratCis?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-dnt="true" data-show-count="false">Follow @MinisterratCis</a>
-                        <script src="https://platform.twitter.com/widgets.js" charset="utf-8"/>
+                        <a href="https://twitter.com/MinisterratCis" class="btn btn-main btn-outline-primary">@MinisterratCis</a>
                     </div>
                 </div>
                 <div class="corner-ribbon bottom-left sticky">Public beta</div>
             </nav>
         </header>
-             <div id="content" class="container"/>
-            <div id="loadModal"/>
-            <footer class="main-footer">
-                <div class="container">
-                    <div class="footer-wrapper">
-                        <div class="footer-sep">
-                            CONTACT
+        <div id="content" class="container"/>
+        <div id="loadModal"/>
+        <footer class="main-footer">
+            <div class="container">
+                <div class="footer-wrapper">
+                    <div class="footer-sep">
+                        CONTACT
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 pl-0">
+                            <a href="https://www.oeaw.ac.at/inz" target="_blank" rel="noopener" aria-label="INZ">
+                                <img src="../resources/img/inz_logo.png" alt="INZ" title="Institute of Modern and Contemporary History at the Austrian Academy of Sciences"/>
+                            </a>
                         </div>
-                        <div class="row">
-                            <div class="col-md-1 pl-0">
-                                <a href="https://www.oeaw.ac.at/inz" target="_blank" rel="noopener" aria-label="INZ">
-                                    <img src="../resources/img/inz_logo.png" alt="INZ" title="Institute of Modern and Contemporary History at the Austrian Academy of Sciences"/>
-                                </a>
-                            </div>
-                            <div class="col-md-4">
-                                <p>
-                                    INZ<br/>
-                                    Institute of Modern and Contemporary History at the Austrian Academy of Sciences<br/>
-                                    Austrian Academy of Sciences
-                                </p>
-                                <p>
-                                    Hollandstraße 11-13 / 1st floor<br/>
-                                        1020 Vienna
-                                </p>
-                                <p>
-                                    T +43 1 51581-7300<br/>
-                                        E: <a href="mailto:INZ@oeaw.ac.at">INZ@oeaw.ac.at</a>
-                                </p>
-                            </div>
-                            <div class="col-md-3 ml-auto">
-                                <img src="../resources/img/oeaw-logo-en.png" alt="ÖAW Logo" title="ÖAW logo"/>
-                            </div>
+                        <div class="col-md-4">
+                            <p>
+                                INZ<br/>
+                                Institute of Modern and Contemporary History at the Austrian Academy of Sciences<br/>
+                                Austrian Academy of Sciences
+                            </p>
+                            <p>
+                                Hollandstraße 11-13 / 1st floor<br/>
+                                1020 Vienna
+                            </p>
+                            <p>
+                                T +43 1 51581-7300<br/>
+                                E: <a href="mailto:INZ@oeaw.ac.at">INZ@oeaw.ac.at</a>
+                            </p>
+                        </div>
+                        <div class="col-md-3 ml-auto">
+                            <img src="../resources/img/oeaw-logo-en.png" alt="ÖAW Logo" title="ÖAW logo"/>
                         </div>
                     </div>
                 </div>
-                <div class="footer-imprint-bar">
-                    <a href="https://www.oeaw.ac.at/die-oeaw/impressum/">Impressum/Imprint</a>
-                </div>
-            </footer>
+            </div>
+            <div class="footer-imprint-bar">
+                <a href="https://www.oeaw.ac.at/die-oeaw/impressum/">Impressum/Imprint</a>
+            </div>
+        </footer>
         
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"/>
@@ -210,6 +207,22 @@
             $.apScrollTop({
                 'onInit': function(evt) {}
             });
+        </script>
+        <script>
+            $(function() {
+       $('a[href*="#"]:not([href="#"])').click(function() {
+         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') &amp;&amp; location.hostname == this.hostname) {
+           var target = $(this.hash);
+           target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+           if (target.length) {
+             $('html, body').animate({
+               scrollTop: target.offset().top
+             }, 200);
+             return false;
+           }
+         }
+       });
+     });
         </script>
     </body>
 </html>
