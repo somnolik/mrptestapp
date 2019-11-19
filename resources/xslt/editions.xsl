@@ -286,11 +286,12 @@
                         <xsl:for-each select="tei:TEI/tei:text/tei:body//tei:note[@type='variant']">
                             <div class="footnote">
                                 <xsl:element name="a">
-                                    <xsl:attribute name="name">
+                                    <xsl:attribute name="id">
                                         <xsl:text>fn</xsl:text>
                                         <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
                                     </xsl:attribute>
-                                    <a>
+                                </xsl:element>
+                                <xsl:element name="a">
                                         <xsl:attribute name="href">
                                             <xsl:text>#fna_</xsl:text>
                                             <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
@@ -298,7 +299,6 @@
                                         <sup>
                                             <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
                                         </sup>
-                                    </a>
                                 </xsl:element>
                                 <xsl:text> </xsl:text>
                                 <xsl:apply-templates/>
@@ -310,11 +310,12 @@
                         <xsl:for-each select="tei:TEI/tei:text/tei:body//tei:note[@type='footnote']">
                             <div class="footnote">
                                 <xsl:element name="a">
-                                    <xsl:attribute name="name">
+                                    <xsl:attribute name="id">
                                         <xsl:text>fn</xsl:text>
                                         <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
                                     </xsl:attribute>
-                                    <a>
+                                </xsl:element>
+                                <xsl:element name="a">
                                         <xsl:attribute name="href">
                                             <xsl:text>#fna_</xsl:text>
                                             <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
@@ -322,7 +323,6 @@
                                         <sup>
                                             <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
                                         </sup>
-                                    </a>
                                 </xsl:element>
                                 <xsl:text> </xsl:text>
                                 <xsl:apply-templates/>
@@ -413,7 +413,7 @@
     
     <xsl:template match="tei:note[@type='footnote']">
         <xsl:element name="a">
-            <xsl:attribute name="name">
+            <xsl:attribute name="id">
                 <xsl:text>fna_</xsl:text>
                 <xsl:number level="any" format="1" count="tei:note[@type='footnote']"/>
             </xsl:attribute>
@@ -432,7 +432,7 @@
     
     <xsl:template match="tei:note[@type='variant']">
         <xsl:element name="a">
-            <xsl:attribute name="name">
+            <xsl:attribute name="id">
                 <xsl:text>fna_</xsl:text>
                 <xsl:number level="any" format="a" count="tei:note[@type='variant']"/>
             </xsl:attribute>
