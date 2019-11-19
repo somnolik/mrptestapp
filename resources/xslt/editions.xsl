@@ -208,7 +208,9 @@
                 </h3>-->
                 <div align="center">
                     <div align="left">
-                        <a href="show.html?document={$volname}-einleitung-tei.xml&amp;directory=editions">Einleitung zum Band</a>
+                        <xsl:if test="$volname!=''">
+                            <a href="show.html?document={$volname}-einleitung-tei.xml&amp;directory=editions">Einleitung zum Band</a>
+                        </xsl:if>
                         <!--<xsl:if test="{$collection-name}//tei:div/tei:head">
                             <h5 id="clickme">
                                 <abbr title="Click to display Table of Contents">Einleitung zum Band</abbr>
