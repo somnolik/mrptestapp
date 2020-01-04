@@ -20,6 +20,7 @@
   <style>
     .label { font: .2em sans-serif; }
     .white { fill: white; }
+    .bold { font. bold; }
   </style>
   <defs
      id="defs2">
@@ -77,7 +78,7 @@
        height="9.4726934"
        x="29.089863"
        y="45.358181" ><title>Abteilung 2: Das Ministerium Schwarzenberg 1848–1852</title></rect>
-       <text x="30" y="50" class="label white">Ministerium Schwarzenberg 1848–1852</text></a>
+       <text class="label white">Ministerium Schwarzenberg 1848–1852</text></a>
      <a href="../pages/toc.html?collection=editions&amp;filterstring=MRP-1-3"><rect
        y="45.358181"
        x="79.199997"
@@ -373,7 +374,7 @@
        width="7.7596054"
        id="rect4871"
        style="opacity:1;fill:#00008b;fill-opacity:1;stroke:#000000;stroke-width:0.2403948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ><title>Band V/1:  7. Februar 1861–30. April 1861</title></rect>
-       <text class="label white"> 7. Februar 1861–30. April 1861</text></a>
+       <text class="label white">7. Februar 1861–30. April 1861</text></a>
      <a href="../pages/toc.html?collection=editions&amp;filterstring=MRP-1-5-02"><rect
        style="opacity:1;fill:#00008b;fill-opacity:1;stroke:#000000;stroke-width:0.2403948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4873"
@@ -444,14 +445,17 @@
        width="7.7596054"
        height="29.759605"
        x="129.64816"
-       y="146.06413" ><title/></rect></a>
+       y="146.06413" ><title>Band VI/1: 29. Juli 1865–26. März 1866</title></rect>
+       <text class="label white">29. Juli 1865–26. März 1866</text></a>
      <a href="../pages/toc.html?collection=editions&amp;filterstring=MRP-1-6-02"><rect
        y="146.06413"
        x="139.64816"
        height="29.759605"
        width="7.7596054"
        id="rect4891"
-       style="opacity:1;fill:#00008b;fill-opacity:1;stroke:#000000;stroke-width:0.2403948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ><title/></rect></a>
+       style="opacity:1;fill:#00008b;fill-opacity:1;stroke:#000000;stroke-width:0.2403948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" >
+       <title>Band VI/2: 8. April 1866–6. Februar 1867</title></rect>
+       <text class="label white">8. April 1866–6. Februar 1867</text></a>
      <a href="http://hw.oeaw.ac.at//ministerrat/serie-2/oe_hu_mrp_I1.xml"><rect
        y="191.42195"
        x="9.7733421"
@@ -571,7 +575,7 @@
          height="29.759605"
          x="69.654053"
          y="235.65367" ><title/></rect></a>
-      <a href="bb"><rect
+      <a href="../pages/toc.html?collection=editions&amp;filterstring=MRP-3-0-08-0"><rect
          y="235.65367"
          x="79.504044"
          height="29.759605"
@@ -579,7 +583,7 @@
          id="rect4992"
          style="display:inline;opacity:1;fill:#3590d2;fill-opacity:1;stroke:#000000;stroke-width:0.2403948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" >
          <title>Band V: 1893–1900: Die Ministerien Windischgrätz, Kielmansegg, Badeni, Gautsch I, Thun, Clary, Wittek</title></rect>
-         <text class="label white">Band V: 1893–1900: Die Ministerien Windischgrätz, Kielmansegg, Badeni, Gautsch I, Thun, Clary, Wittek</text></a>
+         <text class="label white">1893–1900: Die Ministerien Windischgrätz, Kielmansegg, Badeni, Gautsch I, Thun, Clary, Wittek</text></a>
       <a href="#"><rect
          style="display:inline;opacity:1;fill:#3590d2;fill-opacity:1;stroke:#000000;stroke-width:0.2403948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4994"
