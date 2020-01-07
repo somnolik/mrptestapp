@@ -23,7 +23,7 @@
                         '-')"
                 />
             </xsl:variable>
-        <text>
+        <text><!-- this part creates the text from the full title -->
             <xsl:attribute name="x">
                 <xsl:value-of select="$befx+.1"/>
             </xsl:attribute>
@@ -37,10 +37,10 @@
             <xsl:copy-of select="@*|node()"/>
             <title><xsl:value-of select="./text()"/></title>
         </text>
-        <text>
+        <text><!-- this part duplicates the volume number (e.g. VI/2) from the full title and puts it below -->
             <xsl:attribute name="class">label white bold</xsl:attribute>
             <xsl:attribute name="x">
-                <xsl:value-of select="$befx+.5"/>
+                <xsl:value-of select="$befx+1"/>
             </xsl:attribute>
             <xsl:attribute name="y">
                 <xsl:value-of select="$befy+27"/>
