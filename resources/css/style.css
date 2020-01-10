@@ -25,7 +25,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .regest p:first-of-type {
-    / * font-style:italic; */ 
+    /* font-style:italic; */ 
 }
 
 .regest p:last-of-type {
@@ -99,5 +99,10 @@ p.list {
 
 p.list:last-of-type {
     margin-bottom: 1rem;
+}
+
+.agenda_item {
+    padding-top: 40px; 
+    margin-top: -40px
 }
 
