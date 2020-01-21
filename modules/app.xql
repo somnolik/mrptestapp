@@ -81,7 +81,7 @@ return
 
 declare function app:fetchEntity($ref as xs:string){
     let $entity := collection($config:app-root||'/data/indices')//*[@xml:id=$ref]
-    let $type: = if (contains(node-name($entity), 'place')) then 'place'
+    let $type := if (contains(node-name($entity), 'place')) then 'place'
         else if  (contains(node-name($entity), 'person')) then 'person'
         else 'unkown'
     let $viewName := if($type eq 'place') then(string-join($entity/tei:placeName[1]//text(), ', '))

@@ -11,7 +11,7 @@ let $baseurl := "https://hw.oeaw.ac.at/ministerrat/serie-1/"
 
 for $x in collection($app:indices)//tei:TEI//tei:event[@when castable as xs:date]
     let $link2doc := <a href="{app:hrefToDoc($x)}">{app:getHWDocName($x)}</a>
-    let $startDate : = data($x//@when[1])
+    let $startDate := data($x//@when[1])
     let $name := normalize-space(string-join($x//tei:event/tei:label[1]//text(), ' '))
     let $id := data($x/@ref)
     return
