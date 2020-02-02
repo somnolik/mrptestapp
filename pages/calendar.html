@@ -49,6 +49,7 @@
         //https://github.com/martinantonmueller/Hermann-Bahr_Arthur-Schnitzler/blob/master/app/resources/js/calendar.js
         var datasource = "../analyze/calendar_datasource.xql";
         var $disabledDays = [];
+        var all_popover_containers = [];
 
         $.getJSON(datasource, function (data) {
             var $dataSource = [];
@@ -78,6 +79,9 @@
                     mouseOnDay: function (e) { // taken from http://www.bootstrap-year-calendar.com/#Documentation/  and http://www.bootstrap-year-calendar.com/#Examples/Full%20example
                         if (e.events.length > 0) {
                             var content = '';
+                            all_popover_containers.forEach(
+                                existing_container => existing_container.popover('dispose')
+                            );
 
                             for (var i in e.events) {
                                 content += '<div class="event-tooltip-content">'
@@ -87,15 +91,16 @@
                                     + '</div>';
                             }
 
-                            $(e.element).popover({
+                            var popover_container = $(e.element);
+                            popover_container.popover({
                                 trigger: 'hover',
-                                container: 'body',
+                                container: e.element,
                                 html: true,
-                                delay: { "show": 50, "hide": 3000 },
+                                delay: { 'hide': 400 },
                                 content: content
                             });
-
-                            $(e.element).popover('show');
+                            all_popover_containers.push(popover_container);
+                            popover_container.popover('show');
                         }
                     },
                     clickDay: function (e) {
