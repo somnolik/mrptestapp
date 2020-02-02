@@ -68,7 +68,13 @@
         var loadDataForYear = function (year) {
             return fetch(datasource + `?year=${year}`)
                 .then(result => result.json())
+                .catch(reason => {
+                    window.console.log('Error loading calendar data:');
+                    window.console.log(reason);
+                    return [];
+                })
                 .then(json_data => json_data.map(existObjectToCalendarObject))
+                .catch(reason => []);
         };
 
         var togglePopoverContainer = function (e) { // taken from http://www.bootstrap-year-calendar.com/#Documentation/  and http://www.bootstrap-year-calendar.com/#Examples/Full%20example
