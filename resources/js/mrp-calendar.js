@@ -10,12 +10,16 @@ var mrpCalendar = (function (window, document) {
 
     var $disabledDays = [];
     var allPopoverContainers = [];
+    var allYearButtons = {};
 
     var killPopoverGracePeriodMs = 750;
     var killPopoverAfterTimeout = false;
 
     $(document).ready(function () {
         var startYear = getYearParameter() || 1852;
+
+        initializeYearTable();
+        selectYearButton(startYear);
 
         calendarRootElement = document.getElementById('calendar'); // $('#calendar');
         calendarInstance = new Calendar(
@@ -47,6 +51,7 @@ var mrpCalendar = (function (window, document) {
                 yearChanged: function (ev) {
                     var newYear = ev.currentYear;
                     setYearParameter(newYear);
+                    selectYearButton(newYear);
                 }
             }
         );
@@ -91,6 +96,32 @@ var mrpCalendar = (function (window, document) {
             })
             .then(json_data => json_data.map(convertDbObjectToCalendarObject))
             .catch(reason => []);
+    };
+
+    var initializeYearTable = function () {
+        var yearsTable = $('#years-table');
+        var yearButtons = new DocumentFragment();
+        for (var year = 1848; year <= 1918; year++) {
+            var newYearButton = createYearCell(year);
+            yearButtons.appendChild(newYearButton);
+            allYearButtons[year] = newYearButton.firstChild;
+        }
+        yearsTable.append(yearButtons);
+    };
+
+    var selectYearButton = function (year) {
+        for (var buttonYear in allYearButtons) {
+            if (buttonYear == year) {
+                allYearButtons[buttonYear].classList.add('selected');
+            }
+            else {
+                allYearButtons[buttonYear].classList.remove('selected');
+            }
+        }
+    };
+
+    var changeYear = function (year) {
+        calendarInstance.setYear(year);
     };
 
     var getYearParameter = function () {
@@ -191,6 +222,16 @@ var mrpCalendar = (function (window, document) {
 
     var disablePopoverKill = function () {
         killPopoverAfterTimeout = false;
+    };
+
+    var createYearCell = function (val) {
+        var e = document.createElement('div');
+        e.classList.add('col-xs-6');
+        e.innerHTML = '<button class="btn btn-light yearbtn">' + val + '</button>';
+        e.firstElementChild.addEventListener('click', (function (year) {
+            return function () { changeYear(year); };
+        })(val));
+        return e;
     };
 
     var openDateLink = function (e) {
