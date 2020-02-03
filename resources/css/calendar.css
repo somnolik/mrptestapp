@@ -1,6 +1,26 @@
-#calendar .popover-body ul.event-tooltip-content {
+#calendar .popover-body div.event-tooltip-content {
     margin-left: 0;
     margin-bottom: 0;
     padding-left: 0;
-    list-style-position: inside;
+    display: flex;
+    flex-direction: column;
 }
+
+#calendar .popover-body div.event-tooltip-content a.event-tooltip-entry {
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.35ex;
+}
+
+#calendar .popover-body div.event-tooltip-content a.event-tooltip-entry:hover {
+    background-color: hsl(208, 57%, 80%);
+}
+
+#calendar .popover-body div.event-tooltip-content a.event-tooltip-entry:nth-child(odd):not(:hover) {
+    background-color: #f7f7f7;
+}
+#calendar .popover-body div.event-tooltip-content a.event-tooltip-entry:nth-child(even):not(:hover) {
+    background-color: white;
+}
+

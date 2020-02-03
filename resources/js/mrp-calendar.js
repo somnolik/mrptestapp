@@ -4,7 +4,10 @@ var mrpCalendar = (function (window, document) {
     var datasource = "../analyze/calendar_datasource.xql";
     var calendarRootElement;
     var calendarInstance;
+
     var localeDateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var maxPopoverEntryLength = 500;
+
     var $disabledDays = [];
     var allPopoverContainers = [];
 
@@ -50,6 +53,13 @@ var mrpCalendar = (function (window, document) {
                 e.addEventListener('pointerenter', function () {
                     disablePopoverKill();
                 })
+                var childElementBoxes = e.getElementsByClassName('event-tooltip-entry');
+                for (var j = 0; j < childElementBoxes.length; j++) {
+                    var item = childElementBoxes[j];
+                    item.addEventListener('pointerenter', function () {
+                        disablePopoverKill();
+                    });
+                }
             }
         });
     });
@@ -107,15 +117,15 @@ var mrpCalendar = (function (window, document) {
 
     var createPopoverContent = function (e) {
         if (e.events.length > 0) {
-            var content = '';
-            content += '<ul class="event-tooltip-content">';
+            var content = '<div class="event-tooltip-content">';
             for (var i in e.events) {
                 var item_name = (e.events[i].name !== '' ? e.events[i].name : '&lt;kein Titel&gt;');
-                content += '<li class="event-name">'
-                    + '<a href="' + e.events[i].id + '" target="_blank">' + item_name + '</a>'
-                    + '</li>'
+                if (item_name.length > maxPopoverEntryLength) {
+                    item_name = item_name.substring(0, maxPopoverEntryLength) + '...';
+                }
+                content += '<a class="event-tooltip-entry" href="' + e.events[i].id + '" target="_blank">' + item_name + '</a>'
             }
-            content += '</ul>';
+            content += '</div>';
             return content;
         }
         else {
