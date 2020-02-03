@@ -38,12 +38,21 @@
     padding: 0;
 }
 
+#calendar {
+    overflow: visible;
+}
+
+#calendar .months-container .month-container {
+    /* this is set to 200px in js-year-calendar.min.css */
+    height: 230px;
+}
+
 #calendar td.day.one-event {
     box-shadow: hsl(219, 57%, 40%) 0px -4px 0px 0px inset;
 }
 
 #calendar td.day.several-events {
-    box-shadow: hsl(219, 57%, 40%) 0px -8px 0px 0px inset;
+    box-shadow: hsl(219, 57%, 40%) 0px -6px 0px 0px inset;
 }
 
 #calendar .popover-body div.event-tooltip-content {
