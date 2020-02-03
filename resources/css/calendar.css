@@ -1,0 +1,6 @@
+#calendar .popover-body ul.event-tooltip-content {
+    margin-left: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-position: inside;
+}
