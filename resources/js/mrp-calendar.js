@@ -11,6 +11,7 @@ var mrpCalendar = (function (window, document) {
     var $disabledDays = [];
     var allPopoverContainers = [];
     var allYearButtons = {};
+    var dataCache = {};
 
     var killPopoverGracePeriodMs = 750;
     var killPopoverAfterTimeout = false;
@@ -87,7 +88,10 @@ var mrpCalendar = (function (window, document) {
     });
 
     var loadDataForYear = function (year) {
-        return fetch(datasource + `?year=${year}`)
+        if (year in dataCache) {
+            return dataCache[year];
+        }
+        var fetchedData = fetch(datasource + `?year=${year}`)
             .then(result => result.json())
             .catch(reason => {
                 window.console.log('Error loading calendar data:');
@@ -96,6 +100,8 @@ var mrpCalendar = (function (window, document) {
             })
             .then(json_data => json_data.map(convertDbObjectToCalendarObject))
             .catch(reason => []);
+        dataCache[year] = fetchedData;
+        return fetchedData;
     };
 
     var initializeYearTable = function () {
