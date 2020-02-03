@@ -26,11 +26,22 @@ var mrpCalendar = (function (window, document) {
                 maxDate: new Date(1918, 11, 30),
                 weekStart: 1, // week starts on monday,
                 disabledDays: $disabledDays,
-                style: 'background',
+                style: 'custom',
 
                 mouseOnDay: handleEnterDay,
                 mouseOutDay: handleLeaveDay,
-                clickDay: openDateLink
+                clickDay: openDateLink,
+                customDataSourceRenderer: function (element, date, events) {
+                    if (events.length === 0) {
+                        element.parentElement.classList.add('no-events');
+                    }
+                    else if (events.length === 1) {
+                        element.parentElement.classList.add('one-event');
+                    }
+                    else {
+                        element.parentElement.classList.add('several-events');
+                    }
+                }
             }
         );
 
