@@ -15,13 +15,15 @@ var mrpCalendar = (function (window, document) {
     var killPopoverAfterTimeout = false;
 
     $(document).ready(function () {
+        var startYear = getYearParameter() || 1852;
+
         calendarRootElement = document.getElementById('calendar'); // $('#calendar');
         calendarInstance = new Calendar(
             calendarRootElement,
             {
                 dataSource: loadDataForYear,
                 language: 'de',
-                startYear: 1852,
+                startYear: startYear,
                 minDate: new Date(1848, 0, 1),
                 maxDate: new Date(1918, 11, 30),
                 weekStart: 1, // week starts on monday,
@@ -41,6 +43,10 @@ var mrpCalendar = (function (window, document) {
                     else {
                         element.parentElement.classList.add('several-events');
                     }
+                },
+                yearChanged: function (ev) {
+                    var newYear = ev.currentYear;
+                    setYearParameter(newYear);
                 }
             }
         );
@@ -86,6 +92,19 @@ var mrpCalendar = (function (window, document) {
             .then(json_data => json_data.map(convertDbObjectToCalendarObject))
             .catch(reason => []);
     };
+
+    var getYearParameter = function () {
+        var searchParams = new window.URLSearchParams(window.location.search);
+        return searchParams.get('year');
+    };
+
+    var setYearParameter = function (year) {
+        var url = new window.URL(window.location);
+        var searchParams = new window.URLSearchParams(url.search);
+        searchParams.set('year', year);
+        url.search = searchParams.toString();
+        window.history.pushState(history.state, '', url.toString());
+    }
 
     var handleEnterDay = function (ev) {
         var thisDayHasAnAssociatedPopover = (ev.events.length !== 0);
