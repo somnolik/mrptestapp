@@ -153,7 +153,7 @@ var mrpCalendar = (function (window, document) {
                 if (item_name.length > maxPopoverEntryLength) {
                     item_name = item_name.substring(0, maxPopoverEntryLength) + '...';
                 }
-                content += '<a class="event-tooltip-entry" href="' + e.events[i].id + '" target="_blank">' + item_name + '</a>'
+                content += '<a class="event-tooltip-entry" href="' + e.events[i].id + '" target="mrp-details">' + item_name + '</a>'
             }
             content += '</div>';
             return content;
@@ -200,7 +200,7 @@ var mrpCalendar = (function (window, document) {
         });
         if (e.events.length === 1) { // avoids having broken links - an else with a modal, link bubble or some other solution would be nice to have
             // window.location = ids.join()
-            window.open(ids[0], target = "_blank");
+            window.open(ids[0], target = "mrp-details");
         } else if (e.events.length === 0) { // no clicking on no event dates!
         } else {
             $.each(ids, function (i, val) {
@@ -208,7 +208,7 @@ var mrpCalendar = (function (window, document) {
 
             })
             // window.location = ids[1]
-            window.open(ids[1], target = "_blank");
+            window.open(ids[1], target = "mrp-details");
         }
     };
 
