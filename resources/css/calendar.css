@@ -1,4 +1,9 @@
-.card-header * {
+.card-header {
+    text-align: center;
+}
+
+.card-header h1,
+.card-header i.fas {
     display: inline-block;
     font-size: 2.5rem;
     /* padding-right: 0.8rem; */
@@ -22,11 +27,11 @@
     font-size: 0.9rem;
 }
 
-.yearbtn.btn-light:hover {
+.yearbtn:hover {
     background-color: hsl(219, 57%, 80%);
 }
 
-.yearbtn.btn-light.selected {
+.yearbtn.selected {
     box-shadow: 0 0 0 0.2rem hsl(219, 57%, 40%);
 }
 
@@ -81,3 +86,6 @@
     background-color: white;
 }
 
+.hidden {
+    display: none;
+}

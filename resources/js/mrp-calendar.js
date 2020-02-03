@@ -4,6 +4,10 @@ var mrpCalendar = (function (window, document) {
     var datasource = "../analyze/calendar_datasource.xql";
     var calendarRootElement;
     var calendarInstance;
+    var detailsRootElement;
+    var detailsHeaderElement;
+    var detailsTable;
+    var linkWindowTarget = "mrp-details";
 
     var localeDateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var maxPopoverEntryLength = 500;
@@ -34,6 +38,7 @@ var mrpCalendar = (function (window, document) {
                 weekStart: 1, // week starts on monday,
                 disabledDays: $disabledDays,
                 style: 'custom',
+                enableRangeSelection: true,
 
                 mouseOnDay: handleEnterDay,
                 mouseOutDay: handleLeaveDay,
@@ -85,6 +90,36 @@ var mrpCalendar = (function (window, document) {
                 }
             }
         });
+
+        detailsRootElement = document.querySelector('#calendar-selection-details');
+        detailsHeaderElement = detailsRootElement.querySelector('.card-header h3');
+        calendarRootElement.addEventListener('selectRange', function (ev) {
+            showDetailsForRange(ev.startDate, ev.endDate);
+        });
+
+        detailsTable = $('#myTable').DataTable({
+            keepConditions: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+            paging: false,
+            columns: [
+                { "type": "string" },
+                { "type": "string" },
+                { "type": "string" },
+                {
+                    "type": "date",
+                    render: function (data, type, row) {
+                        if (type === "sort" || type === "type") {
+                            return data;
+                        }
+                        return data.toLocaleDateString('de', localeDateOptions);
+                    }
+                },
+                { "type": "html" }
+            ]
+        });
     });
 
     var loadDataForYear = function (year) {
@@ -102,6 +137,30 @@ var mrpCalendar = (function (window, document) {
             .catch(reason => []);
         dataCache[year] = fetchedData;
         return fetchedData;
+    };
+
+    var showDetailsForRange = function (startDate, endDate) {
+        detailsHeaderElement.innerHTML = startDate.toLocaleDateString('de', localeDateOptions) + ' — ' +
+            endDate.toLocaleDateString('de', localeDateOptions);
+        detailsTable.clear();
+        var events = calendarInstance.getEventsOnRange(startDate, endDate);
+        if (events.length === 0) {
+            detailsRootElement.classList.add('hidden');
+        }
+        else {
+            detailsRootElement.classList.remove('hidden');
+            events.forEach(ev => {
+                var fileName = getFileNameFromUrl(ev.id);
+                detailsTable.row.add([
+                    null,
+                    null,
+                    ev.name,
+                    ev.startDate,
+                    '<a href="' + ev.id + '" target="' + linkWindowTarget + '">' + fileName + '</a>'
+                ]);
+            });
+        }
+        detailsTable.draw();
     };
 
     var initializeYearTable = function () {
@@ -190,7 +249,7 @@ var mrpCalendar = (function (window, document) {
                 if (item_name.length > maxPopoverEntryLength) {
                     item_name = item_name.substring(0, maxPopoverEntryLength) + '...';
                 }
-                content += '<a class="event-tooltip-entry" href="' + e.events[i].id + '" target="mrp-details">' + item_name + '</a>'
+                content += '<a class="event-tooltip-entry" href="' + e.events[i].id + '" target="' + linkWindowTarget + '">' + item_name + '</a>'
             }
             content += '</div>';
             return content;
@@ -233,11 +292,15 @@ var mrpCalendar = (function (window, document) {
     var createYearCell = function (val) {
         var e = document.createElement('div');
         e.classList.add('col-xs-6');
-        e.innerHTML = '<button class="btn btn-light yearbtn">' + val + '</button>';
+        e.innerHTML = '<button class="yearbtn">' + val + '</button>';
         e.firstElementChild.addEventListener('click', (function (year) {
             return function () { changeYear(year); };
         })(val));
         return e;
+    };
+
+    var getFileNameFromUrl = function (url) {
+        return url.split('/').pop().split('#').shift();
     };
 
     var openDateLink = function (e) {
@@ -247,7 +310,7 @@ var mrpCalendar = (function (window, document) {
         });
         if (e.events.length === 1) { // avoids having broken links - an else with a modal, link bubble or some other solution would be nice to have
             // window.location = ids.join()
-            window.open(ids[0], target = "mrp-details");
+            window.open(ids[0], target = linkWindowTarget);
         } else if (e.events.length === 0) { // no clicking on no event dates!
         } else {
             $.each(ids, function (i, val) {
@@ -255,7 +318,7 @@ var mrpCalendar = (function (window, document) {
 
             })
             // window.location = ids[1]
-            window.open(ids[1], target = "mrp-details");
+            window.open(ids[1], target = linkWindowTarget);
         }
     };
 
