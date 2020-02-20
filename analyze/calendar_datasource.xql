@@ -7,6 +7,7 @@ declare option exist:serialize "method=json media-type=text/javascript";
 
 let $yearPrefix := request:get-parameter('year', '')
 
+return array {
 for $x in collection($app:editions)//tei:TEI[*//tei:meeting//tei:date[@when castable as xs:date]]
     let $startDate := data($x//tei:meeting/tei:date/@when[1])
     let $name := normalize-space(string-join($x//tei:body/tei:div[1]/tei:head[1]/tei:title[@type='descr']//text(), ' ')) 
@@ -17,5 +18,5 @@ for $x in collection($app:editions)//tei:TEI[*//tei:meeting//tei:date[@when cast
         "items": $items, 
         "startDate": $startDate,
         "id": $id } 
-
+}
 
