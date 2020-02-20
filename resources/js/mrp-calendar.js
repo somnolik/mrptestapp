@@ -160,7 +160,7 @@ var mrpCalendar = (function (window, document) {
         else {
             detailsRootElement.classList.remove('hidden');
             events.forEach(ev => {
-                var html_topics = eventAsHtmlList(ev);
+                var html_topics = eventAsDetailsTableHtml(ev);
                 var fileName = getFileNameFromUrl(ev.id);
                 detailsTable.row.add([
                     ev.startDate,
@@ -253,16 +253,12 @@ var mrpCalendar = (function (window, document) {
 
     var createPopoverContent = function (e) {
         if (e.events.length > 0) {
-            var content = '<div class="event-tooltip-content">';
-            for (var i in e.events) {
-                var item_name = (e.events[i].name !== '' ? e.events[i].name : '&lt;kein Titel&gt;');
-                if (item_name.length > maxPopoverEntryLength) {
-                    item_name = item_name.substring(0, maxPopoverEntryLength) + '...';
-                }
-                content += '<a class="event-tooltip-entry" href="' + e.events[i].id + '" target="' + linkWindowTarget + '">' + item_name + '</a>'
+            return `<div class="event-tooltip-content">
+            ${e.events
+                .map(ev => `<a class="event-tooltip-entry" href="${ev.id}" target="${linkWindowTarget}"><h4>${ev.name}</h4><ul>${eventItemsAsListItems(ev.items)}</ul></a>`)
+                .join('')
             }
-            content += '</div>';
-            return content;
+            </div>`;
         }
         else {
             return null;
@@ -332,19 +328,33 @@ var mrpCalendar = (function (window, document) {
         }
     };
 
-    var eventAsHtmlList = function (ev) {
+    var eventAsDetailsTableHtml = function (ev) {
         var base_url = ev.id;
         window.console.log(ev);
         window.console.log(base_url);
-        if (!ev.items.map) {
-            return `<h4>${ev.name}</h4>`;    
+        return `<h4>${ev.name}</h4><ul>${eventItemsAsListItemLinks(ev.items, base_url)}</ul>`;
+    };
+
+    var eventItemsAsListItems = function (items, base_url) {
+        if (!items.map) {
+            return '';
         }
-        return `<h4>${ev.name}</h4>
-        <ul>${
-            ev.items
+        else {
+            return items
+                .map(item => `<li>${item.name}</li>`)
+                .join('');
+        }
+    };
+
+    var eventItemsAsListItemLinks = function (items, base_url) {
+        if (!items.map) {
+            return '';
+        }
+        else {
+            return items
                 .map(item => `<li><a href="${base_url}${item.link}" target="${linkWindowTarget}">${item.name}</a></li>`)
-                .join('')
-        }</ul>\n`;
+                .join('');
+        }
     };
 
 })(window, document);
