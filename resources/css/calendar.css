@@ -90,6 +90,23 @@
     text-align: center;
 }
 
+#calendar-details-table tbody h4 {
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+}
+
+#calendar-details-table tbody ul {
+    padding-left: 0.4rem;
+    margin-bottom: 0;
+}
+
+#calendar-details-table tbody ul li {
+    list-style-type: none;
+}
+
 .hidden {
     display: none;
 }

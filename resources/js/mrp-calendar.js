@@ -106,10 +106,6 @@ var mrpCalendar = (function (window, document) {
             paging: false,
             columns: [
                 {
-                    "title": "Titel / Sitzung / Tagesordnung",
-                    "type": "string"
-                },
-                {
                     "title": "Datum",
                     "type": "date",
                     render: function (data, type, row) {
@@ -123,6 +119,10 @@ var mrpCalendar = (function (window, document) {
                             return data;
                         }
                     }
+                },
+                {
+                    "title": "Titel / Sitzung / Tagesordnung",
+                    "type": "string"
                 },
                 {
                     "title": "Dokument",
@@ -160,10 +160,11 @@ var mrpCalendar = (function (window, document) {
         else {
             detailsRootElement.classList.remove('hidden');
             events.forEach(ev => {
+                var html_topics = eventAsHtmlList(ev);
                 var fileName = getFileNameFromUrl(ev.id);
                 detailsTable.row.add([
-                    ev.name,
                     ev.startDate,
+                    html_topics,
                     '<a href="' + ev.id + '" target="' + linkWindowTarget + '">' + fileName + '</a>'
                 ]);
             });
@@ -240,12 +241,13 @@ var mrpCalendar = (function (window, document) {
         var m = eObj.startDate.substring(5, 7);
         var d = eObj.startDate.substring(8, 10);
         var bothDates = new Date(j, m - 1, d);
+        window.console.log(eObj);
         return {
             id: eObj.id,
             name: eObj.name,
-            color: '#286090',
             startDate: bothDates,
-            endDate: bothDates
+            endDate: bothDates,
+            items: eObj.items
         };
     };
 
@@ -328,6 +330,18 @@ var mrpCalendar = (function (window, document) {
             // window.location = ids[1]
             window.open(ids[1], target = linkWindowTarget);
         }
+    };
+
+    var eventAsHtmlList = function (ev) {
+        var base_url = ev.id;
+        window.console.log(ev);
+        window.console.log(base_url);
+        return `<h4>${ev.name}</h4>
+            <ul>${
+                ev.items
+                    .map(item => `<li><a href="${base_url}${item.link}" target="${linkWindowTarget}">${item.name}</a></li>`)
+                    .join('')
+            }</ul>\n`;
     };
 
 })(window, document);
