@@ -97,7 +97,7 @@ var mrpCalendar = (function (window, document) {
             showDetailsForRange(ev.startDate, ev.endDate);
         });
 
-        detailsTable = $('#myTable').DataTable({
+        detailsTable = $('#calendar-details-table').DataTable({
             keepConditions: true,
             dom: 'Bfrtip',
             buttons: [
@@ -105,19 +105,29 @@ var mrpCalendar = (function (window, document) {
             ],
             paging: false,
             columns: [
-                { "type": "string" },
-                { "type": "string" },
-                { "type": "string" },
                 {
+                    "title": "Titel / Sitzung / Tagesordnung",
+                    "type": "string"
+                },
+                {
+                    "title": "Datum",
                     "type": "date",
                     render: function (data, type, row) {
                         if (type === "sort" || type === "type") {
                             return data;
                         }
-                        return data.toLocaleDateString('de', localeDateOptions);
+                        if (data.toLocaleDateString) {
+                            return data.toLocaleDateString('de', localeDateOptions);
+                        }
+                        else {
+                            return data;
+                        }
                     }
                 },
-                { "type": "html" }
+                {
+                    "title": "Dokument",
+                    "type": "html"
+                }
             ]
         });
     });
@@ -152,8 +162,6 @@ var mrpCalendar = (function (window, document) {
             events.forEach(ev => {
                 var fileName = getFileNameFromUrl(ev.id);
                 detailsTable.row.add([
-                    null,
-                    null,
                     ev.name,
                     ev.startDate,
                     '<a href="' + ev.id + '" target="' + linkWindowTarget + '">' + fileName + '</a>'

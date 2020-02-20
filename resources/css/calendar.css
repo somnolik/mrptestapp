@@ -86,6 +86,10 @@
     background-color: white;
 }
 
+#calendar-details-table thead th {
+    text-align: center;
+}
+
 .hidden {
     display: none;
 }
