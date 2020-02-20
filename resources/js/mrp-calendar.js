@@ -336,12 +336,15 @@ var mrpCalendar = (function (window, document) {
         var base_url = ev.id;
         window.console.log(ev);
         window.console.log(base_url);
+        if (!ev.items.map) {
+            return `<h4>${ev.name}</h4>`;    
+        }
         return `<h4>${ev.name}</h4>
-            <ul>${
-                ev.items
-                    .map(item => `<li><a href="${base_url}${item.link}" target="${linkWindowTarget}">${item.name}</a></li>`)
-                    .join('')
-            }</ul>\n`;
+        <ul>${
+            ev.items
+                .map(item => `<li><a href="${base_url}${item.link}" target="${linkWindowTarget}">${item.name}</a></li>`)
+                .join('')
+        }</ul>\n`;
     };
 
 })(window, document);
