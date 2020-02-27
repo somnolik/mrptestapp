@@ -96,8 +96,12 @@ var mrpCalendar = (function (window, document) {
                     resetDetailsContent();
                 },
                 selectRange: function (ev) {
+                    setRangeParameters(ev.startDate, ev.endDate);
                     showDetailsForRange(ev.startDate, ev.endDate);
                     makeRangeAppearSelected(ev.startDate, ev.endDate);
+                },
+                renderEnd: function (_) {
+                    setSelectionFromUrlParameters();
                 }
             }
         );
@@ -184,6 +188,14 @@ var mrpCalendar = (function (window, document) {
         detailsTable.draw();
     };
 
+    var setSelectionFromUrlParameters = function () {
+        var selectedRange = getRangeParameters();
+        if (selectedRange && selectedRange.startDate.getFullYear() == calendarInstance.options.startYear) {
+            showDetailsForRange(selectedRange.startDate, selectedRange.endDate);
+            makeRangeAppearSelected(selectedRange.startDate, selectedRange.endDate);
+        }
+    };
+
     var makeRangeAppearSelected = function (startDate, endDate) {
         var year = calendarInstance.options.startYear;
         var months = document.querySelectorAll('div.month-container');
@@ -244,6 +256,27 @@ var mrpCalendar = (function (window, document) {
         url.search = searchParams.toString();
         window.history.pushState(history.state, '', url.toString());
     }
+
+    var getRangeParameters = function () {
+        var searchParams = new window.URLSearchParams(window.location.search);
+        var start = searchParams.get('selectStartDate');
+        var end = searchParams.get('selectEndDate');
+        if (start && end) {
+            return {
+                startDate: new Date(Number(start)),
+                endDate: new Date(Number(end))
+            }
+        }
+    };
+
+    var setRangeParameters = function (startDate, endDate) {
+        var url = new window.URL(window.location);
+        var searchParams = new window.URLSearchParams(url.search);
+        searchParams.set('selectStartDate', startDate.valueOf());
+        searchParams.set('selectEndDate', endDate.valueOf());
+        url.search = searchParams.toString();
+        window.history.pushState(history.state, '', url.toString());
+    };
 
     var handleEnterDay = function (ev) {
         var thisDayHasAnAssociatedPopover = (ev.events.length !== 0);
