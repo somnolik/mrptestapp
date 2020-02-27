@@ -11,7 +11,6 @@ var mrpCalendar = (function (window, document) {
     var showLinkPrefix = "show.html?document=";
 
     var localeDateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    var maxPopoverEntryLength = 500;
 
     var $disabledDays = [];
     var allPopoverContainers = [];
@@ -253,7 +252,6 @@ var mrpCalendar = (function (window, document) {
         var m = eObj.startDate.substring(5, 7);
         var d = eObj.startDate.substring(8, 10);
         var bothDates = new Date(j, m - 1, d);
-        window.console.log(eObj);
         return {
             id: eObj.id,
             name: eObj.name,
@@ -342,8 +340,6 @@ var mrpCalendar = (function (window, document) {
 
     var eventAsDetailsTableHtml = function (ev) {
         var base_url = ev.id;
-        window.console.log(ev);
-        window.console.log(base_url);
         return `<h4>${ev.name}</h4><ul>${eventItemsAsListItemLinks(ev.items, base_url)}</ul>`;
     };
 
