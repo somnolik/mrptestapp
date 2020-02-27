@@ -326,7 +326,7 @@ var mrpCalendar = (function (window, document) {
         });
         if (e.events.length === 1) { // avoids having broken links - an else with a modal, link bubble or some other solution would be nice to have
             // window.location = ids.join()
-            window.open(ids[0], target = linkWindowTarget);
+            window.open(showLinkPrefix + ids[0], target = linkWindowTarget);
         } else if (e.events.length === 0) { // no clicking on no event dates!
         } else {
             $.each(ids, function (i, val) {
@@ -334,7 +334,7 @@ var mrpCalendar = (function (window, document) {
 
             })
             // window.location = ids[1]
-            window.open(ids[1], target = linkWindowTarget);
+            window.open(showLinkPrefix + ids[1], target = linkWindowTarget);
         }
     };
 
