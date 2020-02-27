@@ -97,6 +97,7 @@ var mrpCalendar = (function (window, document) {
                 },
                 selectRange: function (ev) {
                     showDetailsForRange(ev.startDate, ev.endDate);
+                    makeRangeAppearSelected(ev.startDate, ev.endDate);
                 }
             }
         );
@@ -181,6 +182,28 @@ var mrpCalendar = (function (window, document) {
             });
         }
         detailsTable.draw();
+    };
+
+    var makeRangeAppearSelected = function (startDate, endDate) {
+        var year = calendarInstance.options.startYear;
+        var months = document.querySelectorAll('div.month-container');
+        months.forEach(month => {
+            var month_id = month.dataset.monthId;
+            var days = month.querySelectorAll('td.day:not(.old):not(.new)');
+            days.forEach(day => {
+                var day_string = day.textContent;
+                var day_date = new Date(year, month_id, day_string);
+                if (day_date.valueOf() == startDate.valueOf()) {
+                    day.classList.add('range-start');
+                }
+                if (day_date.valueOf() == endDate.valueOf()) {
+                    day.classList.add('range-end');
+                }
+                if (day_date >= startDate && day_date <= endDate) {
+                    day.classList.add('range');
+                }
+            });
+        });
     };
 
     var initializeYearTable = function () {
