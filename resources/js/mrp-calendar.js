@@ -24,8 +24,42 @@ var mrpCalendar = (function (window, document) {
     $(document).ready(function () {
         var startYear = getYearParameter() || 1852;
 
-        initializeYearTable();
-        selectYearButton(startYear);
+        detailsRootElement = document.querySelector('#calendar-selection-details');
+        detailsHeaderElement = detailsRootElement.querySelector('.card-header h3');
+        detailsTable = $('#calendar-details-table').DataTable({
+            keepConditions: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+            paging: false,
+            columns: [
+                {
+                    "title": "Datum",
+                    "type": "date",
+                    render: function (data, type, row) {
+                        if (type === "sort" || type === "type") {
+                            return data;
+                        }
+                        if (data.toLocaleDateString) {
+                            return data.toLocaleDateString('de', localeDateOptions);
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    "title": "Titel / Sitzung / Tagesordnung",
+                    "type": "string"
+                },
+                {
+                    "title": "Dokument",
+                    "type": "html"
+                }
+            ],
+            initComplete: resetDetailsHeader
+        });
 
         calendarRootElement = document.getElementById('calendar'); // $('#calendar');
         calendarInstance = new Calendar(
@@ -59,9 +93,17 @@ var mrpCalendar = (function (window, document) {
                     var newYear = ev.currentYear;
                     setYearParameter(newYear);
                     selectYearButton(newYear);
+                    resetDetailsHeader();
+                    resetDetailsContent();
+                },
+                selectRange: function (ev) {
+                    showDetailsForRange(ev.startDate, ev.endDate);
                 }
             }
         );
+
+        initializeYearTable();
+        selectYearButton(startYear);
 
         document.addEventListener('click', function (ev) {
             // Any click removes all popovers
@@ -92,45 +134,6 @@ var mrpCalendar = (function (window, document) {
             }
         });
 
-        detailsRootElement = document.querySelector('#calendar-selection-details');
-        detailsHeaderElement = detailsRootElement.querySelector('.card-header h3');
-        calendarRootElement.addEventListener('selectRange', function (ev) {
-            showDetailsForRange(ev.startDate, ev.endDate);
-        });
-
-        detailsTable = $('#calendar-details-table').DataTable({
-            keepConditions: true,
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'excel', 'pdf'
-            ],
-            paging: false,
-            columns: [
-                {
-                    "title": "Datum",
-                    "type": "date",
-                    render: function (data, type, row) {
-                        if (type === "sort" || type === "type") {
-                            return data;
-                        }
-                        if (data.toLocaleDateString) {
-                            return data.toLocaleDateString('de', localeDateOptions);
-                        }
-                        else {
-                            return data;
-                        }
-                    }
-                },
-                {
-                    "title": "Titel / Sitzung / Tagesordnung",
-                    "type": "string"
-                },
-                {
-                    "title": "Dokument",
-                    "type": "html"
-                }
-            ]
-        });
     });
 
     var loadDataForYear = function (year) {
@@ -150,16 +153,24 @@ var mrpCalendar = (function (window, document) {
         return fetchedData;
     };
 
-    var showDetailsForRange = function (startDate, endDate) {
-        detailsHeaderElement.innerHTML = startDate.toLocaleDateString('de', localeDateOptions) + ' — ' +
-            endDate.toLocaleDateString('de', localeDateOptions);
+    var resetDetailsHeader = function () {
+        detailsHeaderElement.innerHTML = "Keine Daten ausgewählt";
+    };
+
+    var resetDetailsContent = function() {
         detailsTable.clear();
+        detailsTable.draw();
+    };
+
+    var showDetailsForRange = function (startDate, endDate) {
+        detailsTable.clear();
+        var date_range_string = startDate.toLocaleDateString('de', localeDateOptions) + ' — ' + endDate.toLocaleDateString('de', localeDateOptions);
         var events = calendarInstance.getEventsOnRange(startDate, endDate);
         if (events.length === 0) {
-            detailsRootElement.classList.add('hidden');
+            detailsHeaderElement.innerHTML = "Keine Protokolle im Zeitraum<br />" + date_range_string;
         }
         else {
-            detailsRootElement.classList.remove('hidden');
+            detailsHeaderElement.innerHTML = date_range_string;
             events.forEach(ev => {
                 var html_topics = eventAsDetailsTableHtml(ev);
                 var fileName = getFileNameFromUrl(ev.id);
